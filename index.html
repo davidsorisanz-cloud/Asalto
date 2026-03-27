@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASALTO — Rankings Boxeo Profesional Español</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F7F6F3;
+  --surface: #FFFFFF;
+  --surface2: #F2F1EE;
+  --border: #E5E3DE;
+  --border-strong: #C8C5BE;
+  --text: #1A1916;
+  --text-2: #5C5A55;
+  --text-3: #9C9A95;
+  --accent: #C8121A;
+  --accent-soft: #FFF0F0;
+  --gold: #B8962E;
+  --gold-soft: #FBF6E9;
+  --win: #1A7A3C;
+  --win-bg: #EBF7EF;
+  --loss: #C8121A;
+  --loss-bg: #FCEAEA;
+  --draw: #7A7570;
+  --draw-bg: #F0EEE9;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 100px;
+  --transition: 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─────────────────────────────────────────── */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-word {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  line-height: 1;
+}
+.logo-word em {
+  font-style: italic;
+  color: var(--accent);
+}
+.logo-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.header-search {
+  flex: 1;
+  max-width: 320px;
+  position: relative;
+}
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  height: 38px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 0 14px 0 36px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: all var(--transition);
+}
+.search-input::placeholder { color: var(--text-3); }
+.search-input:focus {
+  border-color: var(--text);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(26,25,22,0.06);
+}
+.header-source {
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+.header-source a { color: var(--gold); text-decoration: none; font-weight: 500; }
+
+/* ─── HERO ─────────────────────────────────────────────── */
+.hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 52px 24px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.hero-text {}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(38px, 5vw, 58px);
+  line-height: 1.0;
+  letter-spacing: -1.5px;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--text-3);
+}
+.hero-desc {
+  font-size: 15px;
+  color: var(--text-2);
+  max-width: 480px;
+  line-height: 1.65;
+}
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+.hero-stat {}
+.hero-stat-n {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.hero-stat-l {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* ─── CATEGORY NAV ──────────────────────────────────────── */
+.cat-nav-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 0;
+}
+.cat-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cat-pill {
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cat-pill:hover {
+  border-color: var(--text);
+  color: var(--text);
+  background: var(--surface);
+}
+.cat-pill.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+}
+.cat-pill .pill-kg {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+/* ─── MAIN CONTENT ──────────────────────────────────────── */
+.main-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ─── RANKINGS PANEL ──────────────────────────────────── */
+.rankings-panel {}
+
+/* Sort bar */
+.sort-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+.sort-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sort-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 4px;
+}
+.sort-btn {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.sort-btn:hover { border-color: var(--text); color: var(--text); }
+.sort-btn.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+}
+.result-count {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* Table */
+.rankings-table {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.table-head {
+  display: grid;
+  grid-template-columns: 48px 1fr 110px 90px 80px 100px;
+  padding: 0 20px;
+  height: 40px;
+  align-items: center;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+.th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.th.right { text-align: right; }
+.th.center { text-align: center; }
+
+/* Fighter row */
+.fighter-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 110px 90px 80px 100px;
+  padding: 14px 20px;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition);
+  position: relative;
+}
+.fighter-row:last-child { border-bottom: none; }
+.fighter-row:hover { background: var(--surface2); }
+.fighter-row.champion { background: var(--gold-soft); }
+.fighter-row.champion:hover { background: #F6EDD5; }
+.fighter-row.hidden { display: none; }
+
+/* Champion stripe */
+.fighter-row.champion::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+
+/* Rank */
+.rank-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.rank-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+.rank-champ {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+/* Fighter info */
+.fighter-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.fighter-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px;
+  color: var(--text-2);
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+  font-style: italic;
+  transition: border-color var(--transition);
+}
+.fighter-row.champion .fighter-avatar {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+.fighter-row:hover .fighter-avatar { border-color: var(--text); }
+.fighter-name-wrap {}
+.fighter-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fighter-alias {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-top: 1px;
+}
+.fighter-origin {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 3px;
+}
+.flag { font-size: 14px; }
+
+/* Record */
+.record-cell { text-align: right; }
+.record-main {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.record-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 1px;
+}
+
+/* KOs */
+.ko-cell {
+  text-align: right;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Titles */
+.titles-cell { text-align: right; }
+.title-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--radius-pill);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.badge-esp { background: #EAF0FF; color: #2B5CE6; }
+.badge-eur { background: #FFF9E0; color: #9A7B00; border: 1px solid #E8D87A; }
+.badge-olm { background: #EDF9F2; color: #1A7A3C; }
+
+/* Last fights */
+.fights-cell {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.fight-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0;
+  flex-shrink: 0;
+}
+.dot-w { background: var(--win-bg); color: var(--win); }
+.dot-l { background: var(--loss-bg); color: var(--loss); }
+.dot-d { background: var(--draw-bg); color: var(--draw); }
+
+/* ─── NO RESULTS ─────────────────────────────────────── */
+.no-results {
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+/* ─── SIDEBAR ────────────────────────────────────────── */
+.sidebar { position: sticky; top: 84px; }
+
+.s-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+.s-block-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.s-block-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* Champs list */
+.champ-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.champ-list-item:last-child { border-bottom: none; }
+.champ-list-item:hover { background: var(--surface2); }
+.champ-av-s {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  border: 1.5px solid #E8D4A0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 12px;
+  color: var(--gold);
+  font-style: italic;
+  flex-shrink: 0;
+}
+.champ-info-s { flex: 1; min-width: 0; }
+.champ-name-s {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.champ-cat-s {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 1px;
+}
+.champ-badge-s {
+  flex-shrink: 0;
+}
+
+/* Featured */
+.featured-card {
+  padding: 18px;
+}
+.featured-av {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--gold);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+.featured-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.featured-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--win);
+  background: var(--win-bg);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+}
+.featured-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+.featured-record {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.fr-stat {}
+.fr-n {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.fr-l {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* Espabox link */
+.espabox-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.espabox-cta:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184,150,46,0.1);
+}
+.espabox-cta-left {}
+.espabox-cta-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+.espabox-cta-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: -0.3px;
+}
+.espabox-cta-arrow {
+  font-size: 18px;
+  color: var(--text-3);
+}
+
+/* ─── MODAL ──────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,25,22,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal {
+  background: var(--surface);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+}
+.modal-overlay.open .modal {
+  transform: translateY(0) scale(1);
+}
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-2);
+  transition: all var(--transition);
+  z-index: 10;
+}
+.modal-close:hover { background: var(--surface2); color: var(--text); }
+
+.modal-header {
+  padding: 32px 32px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.modal-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: var(--text-2);
+  font-style: italic;
+  flex-shrink: 0;
+}
+.modal-avatar.champ-av {
+  background: var(--gold-soft);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.modal-fighter-info {}
+.modal-rank-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+.modal-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.modal-alias {
+  font-size: 14px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.modal-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.modal-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.modal-stat {
+  padding: 20px 16px;
+  background: var(--surface);
+  text-align: center;
+}
+.modal-stat-n {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.modal-stat-l {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+.modal-body { padding: 24px 32px 32px; }
+.modal-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+.modal-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.modal-detail {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.modal-detail-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.modal-detail-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Last fights in modal */
+.fights-list { display: flex; flex-direction: column; gap: 6px; }
+.fight-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface2);
+}
+.fight-result-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.fight-item-info { flex: 1; min-width: 0; }
+.fight-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.fight-item-detail {
+  font-size: 11px;
+  color: var(--text-3);
+}
+.fight-item-date {
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+
+/* ─── CATEGORY TRANSITION ────────────────────────────── */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rankings-table.animating .fighter-row {
+  animation: fadeSlideIn 0.28s cubic-bezier(0.4,0,0.2,1) both;
+}
+.rankings-table.animating .fighter-row:nth-child(2) { animation-delay: 0.03s; }
+.rankings-table.animating .fighter-row:nth-child(3) { animation-delay: 0.06s; }
+.rankings-table.animating .fighter-row:nth-child(4) { animation-delay: 0.09s; }
+.rankings-table.animating .fighter-row:nth-child(5) { animation-delay: 0.12s; }
+.rankings-table.animating .fighter-row:nth-child(6) { animation-delay: 0.15s; }
+.rankings-table.animating .fighter-row:nth-child(7) { animation-delay: 0.18s; }
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 28px 24px;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.footer-logo em { font-style: italic; color: var(--accent); }
+.footer-note {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.7;
+}
+.footer-note a { color: var(--gold); text-decoration: none; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 860px) {
+  .main-wrap { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .hero { flex-direction: column; align-items: flex-start; gap: 20px; padding-top: 36px; }
+  .hero-stats { gap: 20px; }
+  .table-head, .fighter-row { grid-template-columns: 44px 1fr 90px 70px; }
+  .th.col-hide, .fighter-row .col-hide { display: none; }
+  .header-source { display: none; }
+  .modal-stats { grid-template-columns: repeat(2,1fr); }
+  .modal-header { padding: 24px 24px 20px; }
+  .modal-body { padding: 20px 24px 28px; }
+  .modal-name { font-size: 22px; }
+}
+@media (max-width: 560px) {
+  .header-inner { padding: 0 16px; }
+  .main-wrap { padding: 16px 16px 60px; }
+  .cat-nav-wrap { padding: 20px 16px 0; }
+  .hero { padding: 28px 16px 0; }
+  .table-head, .fighter-row { grid-template-columns: 40px 1fr 80px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-word">A<em>salto</em></span>
+      <span class="logo-tag">Rankings</span>
+    </a>
+    <div class="header-search">
+      <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" type="text" placeholder="Buscar boxeador…" id="searchInput" oninput="handleSearch(this.value)">
+    </div>
+    <div class="header-source">Datos: <a href="https://www.espabox.com" target="_blank">Espabox.com</a> · Mar 2026</div>
+  </div>
+</header>
+
+<!-- ═══ HERO ══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Boxeo Profesional Español · 2026</div>
+    <h1 class="hero-title">Rankings<br><em>Nacionales</em></h1>
+    <p class="hero-desc">Los mejores púgiles bajo licencia española, clasificados por categoría. Datos oficiales de <strong>Espabox</strong>, la referencia del boxeo español desde 1994.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-n">6</div>
+      <div class="hero-stat-l">Categorías</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-n">5</div>
+      <div class="hero-stat-l">C. España</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-n">1</div>
+      <div class="hero-stat-l">C. Europa</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-n">80+</div>
+      <div class="hero-stat-l">Púgiles</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CATEGORY PILLS ════════════════════════════════════ -->
+<div class="cat-nav-wrap">
+  <div class="cat-nav" id="catNav">
+    <button class="cat-pill active" data-cat="superwelter" onclick="switchCat(this)">Superwélter <span class="pill-kg">69.8 kg</span></button>
+    <button class="cat-pill" data-cat="medio" onclick="switchCat(this)">Medio <span class="pill-kg">72.6 kg</span></button>
+    <button class="cat-pill" data-cat="supermedio" onclick="switchCat(this)">Supermedio <span class="pill-kg">76.2 kg</span></button>
+    <button class="cat-pill" data-cat="semipesado" onclick="switchCat(this)">Semipesado <span class="pill-kg">79.4 kg</span></button>
+    <button class="cat-pill" data-cat="crucero" onclick="switchCat(this)">Crucero <span class="pill-kg">90.7 kg</span></button>
+    <button class="cat-pill" data-cat="pesado" onclick="switchCat(this)">Pesado <span class="pill-kg">+90.7 kg</span></button>
+  </div>
+</div>
+
+<!-- ═══ MAIN ═══════════════════════════════════════════════ -->
+<div class="main-wrap">
+
+  <!-- Rankings -->
+  <div class="rankings-panel">
+    <div class="sort-bar">
+      <div class="sort-bar-left">
+        <span class="sort-label">Ordenar:</span>
+        <button class="sort-btn active" onclick="sortBy('rank', this)">Ranking</button>
+        <button class="sort-btn" onclick="sortBy('ko', this)">KO%</button>
+        <button class="sort-btn" onclick="sortBy('wins', this)">Victorias</button>
+      </div>
+      <div class="result-count" id="resultCount"></div>
+    </div>
+
+    <div class="rankings-table" id="rankingsTable">
+      <div class="table-head">
+        <span class="th center">#</span>
+        <span class="th">Púgil</span>
+        <span class="th right">Récord</span>
+        <span class="th right col-hide">KOs</span>
+        <span class="th right col-hide">Títulos</span>
+        <span class="th col-hide">Últ. 3</span>
+      </div>
+      <div id="fightersList"></div>
+      <div class="no-results" id="noResults" style="display:none;">No se encontraron boxeadores.</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="s-block">
+      <div class="s-block-head">
+        <span class="s-block-title">🏆 Campeones España</span>
+      </div>
+      <div id="champsList"></div>
+    </div>
+
+    <div class="s-block">
+      <div class="s-block-head">
+        <span class="s-block-title">⭐ Destacado</span>
+      </div>
+      <div class="featured-card">
+        <div class="featured-av">ER</div>
+        <div class="featured-name">Enmanuel Reyes Pla</div>
+        <div class="featured-tag">🥉 Bronce Olímpico París 2024</div>
+        <div class="featured-desc">«El Profeta», nacido en La Habana y licenciado en España, es el boxeador más mediático del momento. Debuta en el profesionalismo con récord perfecto de 2-0.</div>
+        <div class="featured-record">
+          <div class="fr-stat">
+            <div class="fr-n">2</div>
+            <div class="fr-l">Combates</div>
+          </div>
+          <div class="fr-stat">
+            <div class="fr-n">2</div>
+            <div class="fr-l">Victorias</div>
+          </div>
+          <div class="fr-stat">
+            <div class="fr-n">2</div>
+            <div class="fr-l">KOs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://www.espabox.com/ranking-espabox/" target="_blank" class="espabox-cta">
+      <div class="espabox-cta-left">
+        <div class="espabox-cta-label">Fuente oficial</div>
+        <div class="espabox-cta-name">Espabox.com</div>
+      </div>
+      <span class="espabox-cta-arrow">→</span>
+    </a>
+
+  </aside>
+</div>
+
+<!-- ═══ MODAL ══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ══════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-logo">A<em>salto</em></div>
+  <p class="footer-note">Datos extraídos de <a href="https://www.espabox.com" target="_blank">Espabox.com</a> · Rankings actualizados a marzo 2026<br>Visualización independiente. Todos los datos son propiedad de Espabox.</p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
+const DATA = {
+  superwelter: {
+    label: 'Superwélter', kg: '69.853 kg',
+    source: 'https://www.espabox.com/ranking-profesional-espanol-peso-superwelter/',
+    fighters: [
+      { rank: 1, name: 'Sergio García Gómez', alias: '"El Niño"', origin: 'Santander', flag: '🇪🇸', born: '1992', height: '1,80m', record: [35,3,0], kos: 15, titles: ['C.España','C.Europa ×4'], champion: true, fights: ['W','W','W','L','W'], bio: 'Campeón de España y cuatro veces Campeón de Europa del peso superwélter. El boxeador español activo más laureado de los últimos años. 38 combates profesionales con 35 victorias.', city: 'Santander (Cantabria)' },
+      { rank: 2, name: 'Óscar Díaz Muñoz', alias: '"El Toro"', origin: 'Sevilla', flag: '🇪🇸', born: '2001', height: '1,77m', record: [16,0,0], kos: 6, titles: ['Excampeón'], champion: false, fights: ['W','W','W','W','W'], bio: 'Invicto con 16 combates. Joven promesa del boxeo sevillano. Experto en el cuerpo a cuerpo.', city: 'Alcalá de Guadaíra (Sevilla)' },
+      { rank: 3, name: 'Jorge Fortea Sales', alias: '', origin: 'Valencia', flag: '🇪🇸', born: '1990', height: '1,78m', record: [25,4,1], kos: 10, titles: ['Excampeón'], champion: false, fights: ['W','L','W','W','D'], bio: 'Veterano del circuito español con más de 30 combates profesionales.', city: 'Sueca (Valencia)' },
+      { rank: 4, name: 'Ismael S. Flores', alias: '', origin: 'Argentina', flag: '🇦🇷', born: '1999', height: '1,69m', record: [17,1,1], kos: 12, titles: [], champion: false, fights: ['W','W','W','D','W'], bio: 'Nacido en Campo Grande (Argentina). Gran porcentaje de KOs.', city: 'Campo Grande (Argentina)' },
+      { rank: 5, name: 'Elías S. Pinoargote', alias: '', origin: 'Ecuador', flag: '🇪🇨', born: '1999', height: '1,80m', record: [8,1,0], kos: 4, titles: ['C.España'], champion: true, fights: ['W','W','W','L','W'], bio: 'Actual Campeón de España. Zurdo. Originario de Portoviejo (Ecuador).', city: 'Portoviejo (Ecuador)' },
+      { rank: 6, name: 'Ali Modian Bouhechlaf', alias: '"El Príncipe"', origin: 'Marruecos', flag: '🇲🇦', born: '1993', height: '1,87m', record: [15,1,0], kos: 6, titles: [], champion: false, fights: ['W','W','L','W','W'], bio: 'Originario de Sidi Bu Zineb. Boxeador técnico con gran presencia.', city: 'Marruecos' },
+      { rank: 7, name: 'Leonardo Di Stefano', alias: '', origin: 'Alemania', flag: '🇩🇪', born: '1995', height: '1,75m', record: [17,7,0], kos: 14, titles: [], champion: false, fights: ['W','L','W','W','W'], bio: 'Nacido en Luisburgo. Alto porcentaje de KOs para su categoría.', city: 'Luisburgo (Alemania)' },
+      { rank: 13, name: 'Andreu Caballero Gassull', alias: '', origin: 'Barcelona', flag: '🇪🇸', born: '2000', height: '1,77m', record: [7,0,0], kos: 1, titles: [], champion: false, fights: ['W','W','W','W','W'], bio: 'Joven invicto barcelonés con proyección.', city: 'Barcelona' },
+    ]
+  },
+  medio: {
+    label: 'Peso Medio', kg: '72.575 kg',
+    source: 'https://www.espabox.com/ranking-profesional-espanol-peso-medio/',
+    fighters: [
+      { rank: 1, name: 'Ezequiel Gurría Ortigas', alias: '', origin: 'Zaragoza', flag: '🇪🇸', born: '1993', height: '1,81m', record: [21,4,0], kos: 5, titles: ['C.España'], champion: true, fights: ['W','W','L','W','W'], bio: 'Actual Campeón de España del peso medio y peso superwélter. Boxeador técnico de Zaragoza con más de 25 combates.', city: 'Zaragoza' },
+      { rank: 2, name: 'Jhon Jader Obregón', alias: '', origin: 'Colombia', flag: '🇨🇴', born: '1998', height: '1,81m', record: [11,1,2], kos: 5, titles: ['Excampeón'], champion: false, fights: ['W','D','W','W','L'], bio: 'Nacido en Palmira (Colombia). Excampeón de España. Boxeador consistente y técnico.', city: 'Palmira (Colombia)' },
+      { rank: 3, name: 'Fernando Sánchez Jaquero', alias: '"Fernando Jaquero"', origin: 'Alicante', flag: '🇪🇸', born: '1993', height: '1,85m', record: [9,2,1], kos: 4, titles: [], champion: false, fights: ['W','W','D','W','L'], bio: 'Boxeador alicantino con buena técnica.', city: 'Alicante' },
+      { rank: 4, name: 'Álvaro Godoy Alarcón', alias: '', origin: 'Almería', flag: '🇪🇸', born: '2001', height: '1,78m', record: [7,3,1], kos: 2, titles: [], champion: false, fights: ['W','L','W','D','W'], bio: 'Joven boxeador de El Ejido (Almería).', city: 'El Ejido (Almería)' },
+      { rank: 5, name: 'Ioan Alexandru Lutic', alias: '', origin: 'Rumanía', flag: '🇷🇴', born: '1996', height: '1,74m', record: [5,9,0], kos: 4, titles: [], champion: false, fights: ['L','W','L','W','W'], bio: 'Originario de Botosani (Rumanía). Luchador incansable.', city: 'Botosani (Rumanía)' },
+      { rank: 6, name: 'Alcorac Caballero Torres', alias: '', origin: 'Gran Canaria', flag: '🇪🇸', born: '1990', height: '1,78m', record: [8,2,0], kos: 2, titles: [], champion: false, fights: ['W','W','W','L','W'], bio: 'Boxeador de Arucas, Las Palmas. Gran Canaria.', city: 'Arucas (Las Palmas)' },
+      { rank: 7, name: 'Sergio Fernández Lorenzo', alias: '"El Kaiser"', origin: 'Gijón', flag: '🇪🇸', born: '1992', height: '1,80m', record: [16,3,1], kos: 5, titles: ['Excampeón ×2'], champion: false, fights: ['W','W','D','W','L'], bio: 'Doble excampeón de España. Apodado «El Kaiser», boxeador experimentado de Gijón.', city: 'Gijón (Asturias)' },
+      { rank: 10, name: 'Alberto Villa Beltrán', alias: '"Albert Villa"', origin: 'Barcelona', flag: '🇪🇸', born: '2001', height: '1,77m', record: [6,0,1], kos: 3, titles: [], champion: false, fights: ['W','W','D','W','W'], bio: 'Joven boxeador barcelonés invicto. Gran futuro.', city: 'Barcelona' },
+    ]
+  },
+  supermedio: {
+    label: 'Supermedio', kg: '76.203 kg',
+    source: 'https://www.espabox.com/ranking-profesional-espanol-peso-supermedio/',
+    fighters: [
+      { rank: 1, name: 'José Luis Navarro Gómez', alias: '', origin: 'Córdoba', flag: '🇪🇸', born: '2000', height: '1,90m', record: [17,2,0], kos: 12, titles: ['Excampeón'], champion: false, fights: ['W','W','W','L','W'], bio: 'Joven promesa cordobesa nacido en 2000. 12 KOs en 19 combates. Excampeón de España y candidato al título europeo.', city: 'Córdoba' },
+      { rank: 2, name: 'Carlos Mena Mijares', alias: '', origin: 'Cuba', flag: '🇨🇺', born: '1989', height: '1,80m', record: [10,8,1], kos: 3, titles: ['C.España'], champion: true, fights: ['W','W','L','W','D'], bio: 'Actual Campeón de España. Nacido en Ciego de Ávila (Cuba). Boxeador curtido con mucha experiencia.', city: 'Ciego de Ávila (Cuba)' },
+      { rank: 3, name: 'Damián Biacho Bolequia', alias: '"Guinea"', origin: 'Fuerteventura', flag: '🇪🇸', born: '1991', height: '1,81m', record: [21,1,0], kos: 7, titles: ['Excampeón ×2'], champion: false, fights: ['W','W','W','W','L'], bio: 'Dos veces excampeón de España. Nacido en Puerto del Rosario (Fuerteventura). Gran palmarés amateur.', city: 'Puerto del Rosario (Fuerteventura)' },
+      { rank: 4, name: 'Ronny A. Landaeta Utrera', alias: '"El Llanero"', origin: 'Venezuela', flag: '🇻🇪', born: '1983', height: '1,78m', record: [22,8,0], kos: 12, titles: ['Excampeón ×4'], champion: false, fights: ['W','L','W','W','W'], bio: 'Cuatro veces excampeón de España. El boxeador con más títulos nacionales del supermedio. Originario de Venezuela.', city: 'Estado Guarico (Venezuela)' },
+      { rank: 5, name: 'Roberto Casado Olmedo', alias: '', origin: 'Madrid', flag: '🇪🇸', born: '1985', height: '1,82m', record: [4,6,1], kos: 0, titles: [], champion: false, fights: ['L','W','L','D','W'], bio: 'Boxeador zurdo madrileño.', city: 'Madrid' },
+      { rank: 6, name: 'Francisco J. Mejías', alias: '', origin: 'Gran Canaria', flag: '🇪🇸', born: '2002', height: '1,83m', record: [2,1,0], kos: 1, titles: [], champion: false, fights: ['W','W','L'], bio: 'Joven talento de Telde (Las Palmas).', city: 'Telde (Las Palmas)' },
+      { rank: 7, name: 'Jaime Fuentes-Pila Sañudo', alias: '', origin: 'Cantabria', flag: '🇪🇸', born: '2002', height: '1,84m', record: [2,0,0], kos: 2, titles: [], champion: false, fights: ['W','W'], bio: 'Zurdo cántabro. Campeón de España amateur del semipesado 2025.', city: 'Igollo de Camargo (Cantabria)' },
+    ]
+  },
+  semipesado: {
+    label: 'Semipesado', kg: '79.378 kg',
+    source: 'https://www.espabox.com/ranking-profesional-espanol-peso-semipesado/',
+    fighters: [
+      { rank: 1, name: 'Gazi Jalidov Gafurova', alias: '"Gazi Jalidov"', origin: 'Rusia', flag: '🇷🇺', born: '1995', height: '1,86m', record: [4,0,0], kos: 2, titles: ['C.España'], champion: true, fights: ['W','W','W','W'], bio: 'Actual Campeón de España del semipesado. Nacido en Khasavyurt (Rusia). 4 combates, 4 victorias.', city: 'Khasavyurt (Rusia)' },
+      { rank: 2, name: 'Carlos A. Lamela Vázquez', alias: '', origin: 'Cuba', flag: '🇨🇺', born: '1992', height: '1,86m', record: [9,7,0], kos: 5, titles: ['Excampeón'], champion: false, fights: ['L','W','L','W','W'], bio: 'Excampeón de España. Nacido en La Habana (Cuba). Boxeador experimentado con altibajos.', city: 'La Habana (Cuba)' },
+      { rank: 3, name: 'Javier A. Santana Alonso', alias: '', origin: 'Gran Canaria', flag: '🇪🇸', born: '2003', height: '1,84m', record: [4,3,2], kos: 1, titles: [], champion: false, fights: ['W','D','L','W','D'], bio: 'Joven canario con Campeón de España Joven amateur.', city: 'Las Palmas de G.C.' },
+      { rank: 4, name: 'José Antonio Traicovich', alias: '', origin: 'Albacete', flag: '🇪🇸', born: '1999', height: '1,80m', record: [9,0,0], kos: 4, titles: [], champion: false, fights: ['W','W','W','W','W'], bio: 'Invicto con 9 combates. Boxeador de Albacete. Campeón amateur español semipesado 2020.', city: 'Albacete' },
+      { rank: 5, name: 'Eduard Ionut Curmei', alias: '', origin: 'Rumanía', flag: '🇷🇴', born: '2005', height: '1,86m', record: [8,1,0], kos: 6, titles: [], champion: false, fights: ['W','W','W','L','W'], bio: 'Nacido en Piatra Neamt (Rumanía). Joven prodigio con 6 KOs en 9 combates.', city: 'Piatra Neamt (Rumanía)' },
+      { rank: 6, name: 'Adam Trenado Makhdouj', alias: '"El Tornado"', origin: 'Toledo', flag: '🇪🇸', born: '1997', height: '1,85m', record: [11,6,1], kos: 2, titles: [], champion: false, fights: ['W','D','L','W','W'], bio: 'Boxeador de Talavera de la Reina (Toledo). Apodado "El Tornado".', city: 'Talavera de la Reina (Toledo)' },
+      { rank: 7, name: 'Eddy Rafael Ruiz Reinoso', alias: '', origin: 'R. Dominicana', flag: '🇩🇴', born: '1991', height: '1,80m', record: [3,2,0], kos: 3, titles: [], champion: false, fights: ['W','L','W','W','L'], bio: 'Originario de República Dominicana.', city: 'República Dominicana' },
+      { rank: 8, name: 'Fernando Heredia Gallardo', alias: '"La Roca"', origin: 'Mallorca', flag: '🇪🇸', born: '1982', height: '1,79m', record: [8,15,1], kos: 3, titles: [], champion: false, fights: ['L','W','L','W','L'], bio: 'Veterano palmesano. Apodado "La Roca".', city: 'Palma de Mallorca' },
+    ]
+  },
+  crucero: {
+    label: 'Crucero', kg: '90.718 kg',
+    source: 'https://www.espabox.com/ranking-profesional-espanol-peso-crucero/',
+    fighters: [
+      { rank: 1, name: 'Enmanuel Reyes Pla', alias: '"El Profeta"', origin: 'Cuba', flag: '🇨🇺', born: '1992', height: '1,90m', record: [2,0,0], kos: 2, titles: ['🥉 Bronce OL. 2024'], champion: false, fights: ['W','W'], bio: 'Medalla de bronce en los Juegos Olímpicos de París 2024. El boxeador español más mediático del momento. Campeón de España amateur de peso pesado 2019, 2020 y 2021. Nacido en La Habana.', city: 'La Habana (Cuba)' },
+      { rank: 2, name: 'Bocas Junior Njike Kwitchi', alias: '', origin: 'Camerún', flag: '🇨🇲', born: '1999', height: '1,84m', record: [1,0,0], kos: 1, titles: [], champion: false, fights: ['W'], bio: 'Nacido en Yaoundé (Camerún). Debut victorioso.', city: 'Yaoundé (Camerún)' },
+      { rank: 3, name: 'Alex Ray Leautaud Quiroga', alias: '', origin: 'Chile', flag: '🇨🇱', born: '1998', height: '1,89m', record: [4,3,1], kos: 3, titles: [], champion: false, fights: ['W','L','D','W','W'], bio: 'Nacido en Santiago (Chile). Boxeador con experiencia en ambos lados del marcador.', city: 'Santiago (Chile)' },
+      { rank: 4, name: 'Adrián Fresneda Ricardo', alias: '', origin: 'Cuba', flag: '🇨🇺', born: '2004', height: '1,86m', record: [2,0,0], kos: 0, titles: ['C.Mundo Joven 2022'], champion: false, fights: ['W','W'], bio: 'Nacido en La Habana. Campeón del mundo joven del peso pesado en 2022. Campeón de Cuba Joven. Campeón de España amateur crucero 2025.', city: 'La Habana (Cuba)' },
+      { rank: 5, name: 'Diego Torrente Ibáñez', alias: '', origin: 'Barcelona', flag: '🇪🇸', born: '1982', height: '1,86m', record: [8,6,0], kos: 4, titles: [], champion: false, fights: ['W','L','W','L','W'], bio: 'Boxeador barcelonés veterano con larga trayectoria.', city: 'Barcelona' },
+      { rank: 6, name: 'Makhtar Ndiaga Diop Niang', alias: '"Yagui"', origin: 'Senegal', flag: '🇸🇳', born: '1998', height: '1,90m', record: [1,0,0], kos: 1, titles: ['Excampeón Am.'], champion: false, fights: ['W'], bio: 'Originario de Dakar (Senegal). Excampeón de España amateur del crucero 2022 y 2023.', city: 'Dakar (Senegal)' },
+      { rank: 7, name: 'Silvestre Gómez Otero', alias: '', origin: 'La Coruña', flag: '🇪🇸', born: '2004', height: '1,80m', record: [4,0,0], kos: 1, titles: [], champion: false, fights: ['W','W','W','W'], bio: 'Joven boxeador de Noya (La Coruña). Invicto.', city: 'Noya (La Coruña)' },
+    ]
+  },
+  pesado: {
+    label: 'Pesado', kg: '+90.718 kg',
+    source: 'https://www.espabox.com/ranking-profesional-espanol-peso-pesado/',
+    fighters: [
+      { rank: 1, name: 'David A. Romero Bernardo', alias: '"Daan Romero"', origin: 'Valencia', flag: '🇪🇸', born: '1995', height: '1,90m', record: [6,0,0], kos: 3, titles: ['C.España Am.'], champion: false, fights: ['W','W','W','W','W','W'], bio: 'Nacido en Valencia. Campeón de España amateur del peso superpesado 2022. Invicto en 6 combates profesionales.', city: 'Valencia' },
+      { rank: 2, name: 'Álvaro Terrero Marín', alias: '', origin: 'Cádiz', flag: '🇪🇸', born: '1987', height: '1,90m', record: [5,22,2], kos: 3, titles: [], champion: false, fights: ['L','L','W','L','W'], bio: 'Boxeador de Chiclana de la Frontera (Cádiz). Veterano del peso pesado español.', city: 'Chiclana de la Frontera (Cádiz)' },
+      { rank: 3, name: 'Miguel Galván Cabrera', alias: '', origin: 'Tenerife', flag: '🇪🇸', born: '1980', height: '1,76m', record: [5,2,0], kos: 4, titles: [], champion: false, fights: ['W','W','L','W','W'], bio: 'Originario de Santa Cruz de Tenerife. Pegador con alto porcentaje de KOs.', city: 'Santa Cruz de Tenerife' },
+      { rank: 4, name: 'David V. Trallero Oliver', alias: '', origin: 'Alicante', flag: '🇪🇸', born: '1984', height: '1,81m', record: [4,0,1], kos: 2, titles: [], champion: false, fights: ['W','D','W','W','W'], bio: 'Originario de Denia (Alicante).', city: 'Denia (Alicante)' },
+      { rank: 5, name: 'Mohamed Abouhamda', alias: '', origin: 'Marruecos', flag: '🇲🇦', born: '2002', height: '1,90m', record: [2,0,0], kos: 2, titles: [], champion: false, fights: ['W','W'], bio: 'Nacido en Nador (Marruecos). Joven pesado con debut brillante, 2 KOs en 2 combates.', city: 'Nador (Marruecos)' },
+      { rank: 6, name: 'Álvaro Rodríguez Ortiz', alias: '"Grizzly"', origin: 'Cádiz', flag: '🇪🇸', born: '1989', height: '1,90m', record: [1,0,0], kos: 1, titles: [], champion: false, fights: ['W'], bio: 'Apodado "Grizzly". Originario de Algeciras (Cádiz).', city: 'Algeciras (Cádiz)' },
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let currentCat = 'superwelter';
+let currentSort = 'rank';
+let searchQuery = '';
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function getInitials(name) {
+  const parts = name.replace(/["""]/g,'').trim().split(' ');
+  if (parts.length >= 2) return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+  return name.slice(0,2).toUpperCase();
+}
+
+function renderFights(fights) {
+  return fights.slice(0,5).map(r => {
+    const cls = r==='W' ? 'dot-w' : r==='L' ? 'dot-l' : 'dot-d';
+    return `<span class="fight-dot ${cls}">${r}</span>`;
+  }).join('');
+}
+
+function renderBadges(titles) {
+  return titles.map(t => {
+    let cls = 'badge-esp';
+    if (t.includes('Europa')) cls = 'badge-eur';
+    if (t.includes('OL') || t.includes('Olímpico') || t.includes('Mundo')) cls = 'badge-olm';
+    return `<span class="title-badge ${cls}">${t}</span>`;
+  }).join(' ');
+}
+
+function koPct(f) {
+  const total = f.record[0]+f.record[1]+f.record[2];
+  return total ? Math.round((f.kos/total)*100) : 0;
+}
+
+function getSortedFiltered() {
+  const cat = DATA[currentCat];
+  let fighters = [...cat.fighters];
+
+  // filter
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    fighters = fighters.filter(f =>
+      f.name.toLowerCase().includes(q) ||
+      f.alias.toLowerCase().includes(q) ||
+      f.origin.toLowerCase().includes(q)
+    );
+  }
+
+  // sort
+  if (currentSort === 'ko') fighters.sort((a,b) => koPct(b)-koPct(a));
+  else if (currentSort === 'wins') fighters.sort((a,b) => b.record[0]-a.record[0]);
+  else fighters.sort((a,b) => a.rank-b.rank);
+
+  return fighters;
+}
+
+function renderTable() {
+  const fighters = getSortedFiltered();
+  const list = document.getElementById('fightersList');
+  const noRes = document.getElementById('noResults');
+  const table = document.getElementById('rankingsTable');
+  const countEl = document.getElementById('resultCount');
+
+  // animate
+  table.classList.remove('animating');
+  void table.offsetWidth;
+  table.classList.add('animating');
+  setTimeout(() => table.classList.remove('animating'), 600);
+
+  countEl.textContent = `${fighters.length} boxeador${fighters.length!==1?'es':''}`;
+
+  if (!fighters.length) {
+    list.innerHTML = '';
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  list.innerHTML = fighters.map(f => {
+    const rec = `${f.record[0]}-${f.record[1]}${f.record[2]>0?'-'+f.record[2]:''}`;
+    const initials = getInitials(f.name);
+    return `
+    <div class="fighter-row ${f.champion||f.titles.some(t=>t.startsWith('C.España')&&!t.startsWith('Exc'))?'champion':''}" onclick="openModal('${currentCat}',${f.rank})">
+      <div class="rank-cell">
+        <div class="rank-number">${f.rank}</div>
+        ${f.champion || f.titles.some(t=>t==='C.España') ? '<div class="rank-champ">CAMP.</div>' : ''}
+      </div>
+      <div class="fighter-info">
+        <div class="fighter-avatar">${initials}</div>
+        <div class="fighter-name-wrap">
+          <div class="fighter-name">${f.name}</div>
+          ${f.alias ? `<div class="fighter-alias">${f.alias}</div>` : ''}
+          <div class="fighter-origin"><span class="flag">${f.flag}</span>${f.origin}</div>
+        </div>
+      </div>
+      <div class="record-cell">
+        <div class="record-main">${rec}</div>
+        <div class="record-sub">${f.record[0]+f.record[1]+f.record[2]} combates</div>
+      </div>
+      <div class="ko-cell col-hide">${f.kos} <span style="font-size:11px;color:var(--text-3);">(${koPct(f)}%)</span></div>
+      <div class="titles-cell col-hide">${renderBadges(f.titles)}</div>
+      <div class="fights-cell col-hide">${renderFights(f.fights)}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderChamps() {
+  const list = document.getElementById('champsList');
+  const champs = [];
+  for (const [key, cat] of Object.entries(DATA)) {
+    const c = cat.fighters.find(f => f.champion || f.titles.some(t => t === 'C.España'));
+    if (c) champs.push({ ...c, catLabel: cat.label, catKey: key });
+  }
+  list.innerHTML = champs.map(c => `
+    <div class="champ-list-item" onclick="switchCatByKey('${c.catKey}'); setTimeout(()=>openModal('${c.catKey}',${c.rank}),200)">
+      <div class="champ-av-s">${getInitials(c.name)}</div>
+      <div class="champ-info-s">
+        <div class="champ-name-s">${c.name.split(' ').slice(0,2).join(' ')}</div>
+        <div class="champ-cat-s">${c.catLabel} · ${c.flag} ${c.origin}</div>
+      </div>
+      <div class="champ-badge-s"><span class="title-badge badge-esp">C.ESP</span></div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════════
+function openModal(cat, rank) {
+  const f = DATA[cat].fighters.find(x => x.rank === rank);
+  if (!f) return;
+  const initials = getInitials(f.name);
+  const rec = `${f.record[0]}-${f.record[1]}${f.record[2]>0?'-'+f.record[2]:''}`;
+  const isChamp = f.champion || f.titles.some(t => t === 'C.España');
+  const catData = DATA[cat];
+
+  const fightRows = f.fights.map((r,i) => {
+    const cls = r==='W'?'dot-w':r==='L'?'dot-l':'dot-d';
+    const label = r==='W'?'Victoria':r==='L'?'Derrota':'Empate';
+    return `<div class="fight-item">
+      <div class="fight-result-badge ${cls}">${r}</div>
+      <div class="fight-item-info">
+        <div class="fight-item-name">${label} — Combate ${f.fights.length-i}</div>
+        <div class="fight-item-detail">${catData.label} · Liga española</div>
+      </div>
+      <div class="fight-item-date">2025–26</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-header">
+      <div class="modal-avatar ${isChamp?'champ-av':''}">${initials}</div>
+      <div class="modal-fighter-info">
+        <div class="modal-rank-tag">Ranking #${f.rank} · ${catData.label}</div>
+        <div class="modal-name">${f.name}</div>
+        ${f.alias ? `<div class="modal-alias">${f.alias}</div>` : ''}
+        <div class="modal-badges">${renderBadges(f.titles)}</div>
+      </div>
+    </div>
+    <div class="modal-stats">
+      <div class="modal-stat"><div class="modal-stat-n">${f.record[0]}</div><div class="modal-stat-l">Victorias</div></div>
+      <div class="modal-stat"><div class="modal-stat-n">${f.record[1]}</div><div class="modal-stat-l">Derrotas</div></div>
+      <div class="modal-stat"><div class="modal-stat-n">${f.record[2]}</div><div class="modal-stat-l">Empates</div></div>
+      <div class="modal-stat"><div class="modal-stat-n">${f.kos}</div><div class="modal-stat-l">KOs</div></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section-title">Información</div>
+      <div class="modal-detail-grid">
+        <div class="modal-detail"><div class="modal-detail-label">Origen</div><div class="modal-detail-value">${f.flag} ${f.city}</div></div>
+        <div class="modal-detail"><div class="modal-detail-label">Año nacimiento</div><div class="modal-detail-value">${f.born}</div></div>
+        <div class="modal-detail"><div class="modal-detail-label">Altura</div><div class="modal-detail-value">${f.height}</div></div>
+        <div class="modal-detail"><div class="modal-detail-label">Categoría</div><div class="modal-detail-value">${catData.label} (${catData.kg})</div></div>
+        <div class="modal-detail" style="grid-column:span 2"><div class="modal-detail-label">Récord</div><div class="modal-detail-value">${rec} — ${koPct(f)}% KO</div></div>
+      </div>
+      <div class="modal-section-title">Trayectoria</div>
+      <div style="font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:20px;">${f.bio}</div>
+      <div class="modal-section-title">Últimos combates</div>
+      <div class="fights-list">${fightRows}</div>
+      <div style="margin-top:16px;">
+        <a href="${catData.source}" target="_blank" style="font-size:12px;color:var(--gold);text-decoration:none;font-weight:500;">Ver en Espabox.com →</a>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+// ═══════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════
+function switchCat(btn) {
+  currentCat = btn.dataset.cat;
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  currentSort = 'rank';
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sort-btn')[0].classList.add('active');
+  renderTable();
+}
+
+function switchCatByKey(key) {
+  currentCat = key;
+  document.querySelectorAll('.cat-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.cat === key);
+  });
+  currentSort = 'rank';
+  renderTable();
+}
+
+function sortBy(field, btn) {
+  currentSort = field;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function handleSearch(val) {
+  searchQuery = val.trim();
+  renderTable();
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+renderTable();
+renderChamps();
+</script>
+</body>
+</html>
