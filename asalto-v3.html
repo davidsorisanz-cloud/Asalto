@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asalto — Boxeo Profesional Español</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#fff;color:#111;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+
+:root{
+  --ink:#111111;
+  --ink-2:#444440;
+  --ink-3:#888884;
+  --ink-4:#BBBBBB;
+  --bg:#F8F7F4;
+  --bg-2:#F0EFE9;
+  --bg-3:#E8E6DF;
+  --white:#FFFFFF;
+  --line:#E2E0D8;
+  --line-2:#CCCAC2;
+  --red:#C41A1A;
+  --red-2:#A01515;
+  --red-bg:#FEF2F2;
+  --gold:#9A6F28;
+  --gold-2:#B8962E;
+  --gold-bg:#FBF6EC;
+  --gold-line:#E0C97C;
+  --win:#166534;
+  --win-bg:#F0FDF4;
+  --loss:#991B1B;
+  --loss-bg:#FEF2F2;
+  --draw:#6B7280;
+  --draw-bg:#F9FAFB;
+  --w:1140px;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --t:.18s;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.05);
+  --shadow-sm:0 2px 6px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 6px 20px rgba(0,0,0,.09),0 2px 6px rgba(0,0,0,.05);
+  --shadow-lg:0 24px 56px rgba(0,0,0,.14),0 8px 20px rgba(0,0,0,.07);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOP UTILITY BAR
+═══════════════════════════════════════════════════════ */
+.util-bar{
+  background:var(--ink);color:var(--ink-4);
+  font-size:11px;font-weight:500;letter-spacing:.3px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:34px;
+}
+.util-bar a{color:var(--ink-4);transition:color var(--t)}
+.util-bar a:hover{color:#fff}
+.util-date{display:flex;align-items:center;gap:6px}
+.util-date-dot{width:5px;height:5px;background:var(--red);border-radius:50%}
+.util-links{display:flex;gap:20px}
+
+/* ═══════════════════════════════════════════════════════
+   MASTHEAD
+═══════════════════════════════════════════════════════ */
+.masthead{
+  background:var(--white);
+  border-bottom:3px solid var(--ink);
+  position:sticky;top:0;z-index:400;
+}
+.masthead-inner{
+  max-width:var(--w);margin:0 auto;
+  padding:0 32px;height:62px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.wordmark{
+  font-family:'Playfair Display',serif;
+  font-size:30px;font-weight:900;letter-spacing:-1px;
+  line-height:1;display:flex;align-items:baseline;gap:1px;
+}
+.wm-a{color:var(--red)}
+.wm-rest{color:var(--ink)}
+.wm-period{color:var(--ink-3);font-size:26px}
+
+.main-nav{display:flex;gap:0;align-items:center}
+.nav-btn{
+  height:62px;padding:0 16px;
+  font-size:13px;font-weight:600;letter-spacing:.2px;
+  color:var(--ink-2);border-bottom:3px solid transparent;margin-bottom:-3px;
+  transition:all var(--t) var(--ease);display:flex;align-items:center;
+}
+.nav-btn:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.nav-btn.active{color:var(--ink);border-bottom-color:var(--red)}
+
+.search-form{position:relative}
+.search-ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink-3);pointer-events:none}
+.search-inp{
+  height:36px;width:220px;padding:0 14px 0 32px;
+  background:var(--bg);border:1.5px solid var(--line);border-radius:20px;
+  font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);outline:none;
+  transition:all var(--t) var(--ease);
+}
+.search-inp::placeholder{color:var(--ink-3)}
+.search-inp:focus{background:#fff;border-color:var(--ink);width:260px;box-shadow:0 0 0 3px rgba(17,17,17,.06)}
+
+/* ═══════════════════════════════════════════════════════
+   VIEWS
+═══════════════════════════════════════════════════════ */
+.view{display:none}
+.view.active{display:block}
+
+/* ═══════════════════════════════════════════════════════
+   HERO LEAD — 5 NOTICIAS
+═══════════════════════════════════════════════════════ */
+.lead-section{background:var(--white);padding:32px 0 0}
+.lead-inner{max-width:var(--w);margin:0 auto;padding:0 32px}
+
+.lead-label{
+  display:flex;align-items:center;gap:10px;margin-bottom:20px;
+}
+.lead-label-line{flex:1;height:1px;background:var(--line)}
+.lead-label-text{
+  font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;padding:0 4px;
+}
+
+/* Main grid: 1 hero + 4 cards */
+.lead-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:48px;
+}
+
+.news-hero{
+  grid-column:1;grid-row:1/3;
+  background:var(--white);
+  display:flex;flex-direction:column;
+  cursor:pointer;transition:background var(--t) var(--ease);
+  position:relative;
+}
+.news-hero:hover{background:var(--bg)}
+.news-hero-img{
+  width:100%;aspect-ratio:16/10;
+  background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.news-hero-img-pattern{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,.015) 20px,rgba(255,255,255,.015) 40px);
+}
+.news-hero-img-overlay{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 100%);
+  height:50%;
+}
+.news-hero-cat{
+  position:absolute;top:16px;left:16px;
+  background:var(--red);color:#fff;
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 9px;border-radius:2px;
+}
+.news-hero-initials{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Playfair Display',serif;font-size:80px;font-weight:900;
+  color:rgba(255,255,255,.06);letter-spacing:-3px;user-select:none;
+}
+.news-hero-body{padding:24px 24px 28px;flex:1}
+.news-hero-tag{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--red);margin-bottom:10px;
+}
+.news-hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-.4px;
+  color:var(--ink);margin-bottom:12px;
+}
+.news-hero-desc{font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:14px}
+.news-hero-meta{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.news-hero-meta-dot{width:3px;height:3px;background:var(--ink-4);border-radius:50%}
+
+/* Side news cards */
+.news-card{
+  background:var(--white);
+  display:flex;gap:16px;padding:20px 20px;
+  cursor:pointer;transition:background var(--t) var(--ease);
+  align-items:flex-start;
+}
+.news-card:hover{background:var(--bg)}
+.news-card-thumb{
+  width:88px;height:68px;border-radius:3px;flex-shrink:0;
+  background:linear-gradient(135deg,#2a2a2a 0%,#3d3d3d 100%);
+  position:relative;overflow:hidden;
+}
+.news-card-thumb-initials{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:900;
+  color:rgba(255,255,255,.12);
+}
+.news-card-body{flex:1;min-width:0}
+.news-card-tag{
+  font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--red);margin-bottom:5px;
+}
+.news-card-title{
+  font-family:'Playfair Display',serif;
+  font-size:15px;font-weight:700;line-height:1.3;letter-spacing:-.2px;
+  color:var(--ink);margin-bottom:6px;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.news-card-meta{font-size:11px;color:var(--ink-3)}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION DIVIDER
+═══════════════════════════════════════════════════════ */
+.sec-divider{
+  max-width:var(--w);margin:0 auto;padding:0 32px;
+  display:flex;align-items:center;gap:14px;margin-bottom:28px;
+}
+.sec-divider-title{
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:800;letter---spacing:-.3px;color:var(--ink);
+  white-space:nowrap;
+}
+.sec-divider-line{flex:1;height:1px;background:var(--line)}
+.sec-divider-link{
+  font-size:12px;font-weight:600;color:var(--gold);
+  white-space:nowrap;transition:color var(--t);
+}
+.sec-divider-link:hover{color:var(--gold-2)}
+
+/* ═══════════════════════════════════════════════════════
+   NEWS SECONDARY ROW
+═══════════════════════════════════════════════════════ */
+.news-row-section{background:var(--bg);padding:40px 0}
+.news-row-inner{max-width:var(--w);margin:0 auto;padding:0 32px}
+.news-row-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+.news-mini{
+  background:var(--white);border-radius:6px;overflow:hidden;
+  box-shadow:var(--shadow-xs);cursor:pointer;
+  transition:transform var(--t) var(--ease),box-shadow var(--t) var(--ease);
+}
+.news-mini:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.news-mini-thumb{
+  width:100%;aspect-ratio:16/9;
+  background:linear-gradient(135deg,#252525 0%,#383838 100%);
+  position:relative;overflow:hidden;
+}
+.news-mini-thumb-initials{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:36px;font-weight:900;
+  color:rgba(255,255,255,.1);
+}
+.news-mini-body{padding:16px 18px 20px}
+.news-mini-tag{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.news-mini-title{
+  font-family:'Playfair Display',serif;
+  font-size:16px;font-weight:700;line-height:1.3;letter-spacing:-.2px;
+  color:var(--ink);margin-bottom:8px;
+}
+.news-mini-meta{font-size:11px;color:var(--ink-3)}
+
+/* ═══════════════════════════════════════════════════════
+   RANKINGS VIEW
+═══════════════════════════════════════════════════════ */
+.rankings-view{background:var(--bg);min-height:100vh;padding:36px 0 80px}
+.rk-inner{max-width:var(--w);margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 280px;gap:28px;align-items:start}
+
+/* Rankings header */
+.rk-header{margin-bottom:24px}
+.rk-eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.rk-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;letter-spacing:-.8px;color:var(--ink);line-height:1;margin-bottom:4px}
+.rk-sub{font-size:13.5px;color:var(--ink-3);margin-top:6px}
+
+/* Cat pills */
+.cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.cpill{
+  height:34px;padding:0 16px;border-radius:20px;
+  border:1.5px solid var(--line);background:var(--white);
+  font-size:13px;font-weight:500;color:var(--ink-2);
+  display:flex;align-items:center;gap:6px;
+  transition:all var(--t) var(--ease);white-space:nowrap;
+}
+.cpill:hover{border-color:var(--ink);color:var(--ink)}
+.cpill.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.cpill-kg{font-size:11px;opacity:.5}
+
+/* Sort bar */
+.sort-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px}
+.sort-left{display:flex;align-items:center;gap:6px}
+.sort-lbl{font-size:11.5px;font-weight:500;color:var(--ink-3);margin-right:2px}
+.sbtn{
+  height:30px;padding:0 12px;border-radius:20px;
+  border:1px solid var(--line);background:var(--white);
+  font-size:12px;font-weight:500;color:var(--ink-2);
+  transition:all var(--t) var(--ease);
+}
+.sbtn:hover{border-color:var(--ink);color:var(--ink)}
+.sbtn.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.rk-count{font-size:12.5px;color:var(--ink-3)}
+
+/* Table */
+.tbl-wrap{background:var(--white);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:var(--shadow-xs)}
+.tbl-head{
+  display:grid;grid-template-columns:52px 1fr 100px 72px 80px 96px;
+  padding:0 20px;height:38px;align-items:center;gap:8px;
+  background:var(--bg-2);border-bottom:1px solid var(--line);
+}
+.th{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3)}
+.th.r{text-align:right}
+.frow{
+  display:grid;grid-template-columns:52px 1fr 100px 72px 80px 96px;
+  padding:13px 20px;gap:8px;border-bottom:1px solid var(--line);
+  align-items:center;cursor:pointer;
+  transition:background var(--t) var(--ease);
+  position:relative;
+}
+.frow:last-child{border-bottom:none}
+.frow:hover{background:var(--bg)}
+.frow.champ{background:var(--gold-bg)}
+.frow.champ:hover{background:#F5EDD6}
+.frow.champ::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold-2);border-radius:0 2px 2px 0}
+.frow.hidden{display:none}
+
+/* rank */
+.rc{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.rc-n{font-family:'Playfair Display',serif;font-size:21px;color:var(--ink);line-height:1;font-weight:700}
+.rc-c{font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+
+/* fighter info */
+.fi{display:flex;align-items:center;gap:13px;min-width:0}
+.av{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:13px;color:var(--ink-3);background:var(--bg-2);
+  transition:border-color var(--t);
+}
+.frow.champ .av{border-color:var(--gold-line);background:var(--gold-bg);color:var(--gold)}
+.frow:hover .av{border-color:var(--ink-3)}
+.fi-t{min-width:0}
+.fi-name{font-size:14.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fi-sub{display:flex;align-items:center;gap:5px;margin-top:2px}
+.fi-nick{font-size:12px;color:var(--ink-3);font-style:italic}
+.fi-sep{font-size:10px;color:var(--line-2)}
+.fi-flag{font-size:13px}
+.fi-country{font-size:12px;color:var(--ink-2)}
+
+/* cells */
+.rec-cell{text-align:right}
+.rec-main{font-size:14px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.rec-sub{font-size:11px;color:var(--ink-3);margin-top:1px}
+.ko-cell{text-align:right;font-size:14px;font-weight:500;color:var(--ink)}
+.ko-pct{font-size:10.5px;color:var(--ink-3)}
+.title-cell{text-align:right}
+.tbadge{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
+.tb-es{background:#EEF2FF;color:#3730A3}
+.tb-eu{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.tb-ol{background:var(--win-bg);color:var(--win)}
+.tb-ex{background:var(--bg-2);color:var(--ink-3)}
+.lf{display:flex;gap:3px;align-items:center;justify-content:flex-end}
+.dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800}
+.dw{background:var(--win-bg);color:var(--win)}
+.dl{background:var(--loss-bg);color:var(--loss)}
+.dd{background:var(--draw-bg);color:var(--draw)}
+.no-res{padding:48px 20px;text-align:center;color:var(--ink-3);font-size:14px}
+
+/* Sidebar */
+.sidebar{position:sticky;top:80px;display:flex;flex-direction:column;gap:16px}
+.sc{background:var(--white);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:var(--shadow-xs)}
+.sc-head{padding:13px 16px;border-bottom:1px solid var(--line);font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3)}
+.ci{display:flex;align-items:center;gap:11px;padding:11px 16px;border-bottom:1px solid var(--line);cursor:pointer;transition:background var(--t)}
+.ci:last-child{border-bottom:none}
+.ci:hover{background:var(--bg)}
+.ci-av{width:36px;height:36px;border-radius:50%;background:var(--gold-bg);border:1.5px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--gold);flex-shrink:0}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-cat{font-size:11px;color:var(--ink-3);margin-top:1px}
+.feat-card{padding:16px}
+.feat-av{width:52px;height:52px;border-radius:50%;background:var(--gold-bg);border:2px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:16px;color:var(--gold);margin-bottom:12px}
+.feat-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:6px}
+.feat-tag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;color:var(--win);background:var(--win-bg);padding:2px 8px;border-radius:20px;margin-bottom:10px}
+.feat-bio{font-size:12px;color:var(--ink-2);line-height:1.65}
+.feat-stats{display:flex;gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.fs-n{font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);font-weight:700;line-height:1}
+.fs-l{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-3);margin-top:2px}
+.espa-link{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:var(--white);border:1px solid var(--line);border-radius:8px;transition:all var(--t);box-shadow:var(--shadow-xs)}
+.espa-link:hover{border-color:var(--gold-2);box-shadow:0 0 0 3px rgba(155,111,40,.08)}
+.espa-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-bottom:2px}
+.espa-name{font-family:'Playfair Display',serif;font-size:17px;color:var(--gold);font-weight:700}
+.espa-arr{font-size:16px;color:var(--ink-3)}
+
+/* ═══════════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════════ */
+.overlay{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--white);border-radius:16px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);transform:translateY(24px) scale(.97);transition:transform .28s cubic-bezier(.34,1.56,.64,1);position:relative}
+.overlay.open .modal{transform:translateY(0) scale(1)}
+.m-close{position:absolute;top:18px;right:18px;z-index:10;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--ink-2);cursor:pointer;transition:all var(--t)}
+.m-close:hover{background:var(--bg);color:var(--ink)}
+.m-hero{background:linear-gradient(150deg,var(--bg-2) 0%,var(--white) 70%);padding:36px 32px 28px;border-bottom:1px solid var(--line);display:flex;gap:20px;align-items:flex-start}
+.m-av{width:88px;height:88px;border-radius:50%;flex-shrink:0;border:2px solid var(--line);background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:28px;color:var(--ink-3)}
+.m-av.gold{border-color:var(--gold-line);background:var(--gold-bg);color:var(--gold)}
+.m-pretitle{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.m-name{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;line-height:1;letter-spacing:-.6px;color:var(--ink);margin-bottom:4px}
+.m-nick{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:var(--ink-3);margin-bottom:12px}
+.m-badges{display:flex;gap:5px;flex-wrap:wrap}
+.m-statsbar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--line);border-bottom:1px solid var(--line)}
+.m-stat{padding:18px 14px;background:var(--white);text-align:center}
+.m-stat-n{font-family:'Playfair Display',serif;font-size:26px;color:var(--ink);font-weight:700;letter-spacing:-.5px;line-height:1}
+.m-stat-l{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.m-body{padding:24px 32px 32px}
+.m-sec{margin-bottom:24px}
+.m-sec-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m-detail{background:var(--bg-2);border-radius:6px;padding:11px 13px}
+.m-dlabel{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px}
+.m-dvalue{font-size:14px;font-weight:600;color:var(--ink)}
+.m-bio{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.m-fights{display:flex;flex-direction:column;gap:7px}
+.mf-item{display:flex;align-items:center;gap:11px;padding:10px 13px;background:var(--bg-2);border-radius:6px}
+.mf-badge{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mf-info{flex:1;min-width:0}
+.mf-name{font-size:13px;font-weight:600;color:var(--ink)}
+.mf-det{font-size:11px;color:var(--ink-3);margin-top:1px}
+.mf-date{font-size:11.5px;color:var(--ink-3);flex-shrink:0}
+.m-src{margin-top:16px}
+.m-src a{font-size:12px;color:var(--gold);font-weight:600}
+
+/* ═══════════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════════ */
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.tbl-wrap.anim .frow{animation:slideUp .22s var(--ease) both}
+.tbl-wrap.anim .frow:nth-child(2){animation-delay:.03s}
+.tbl-wrap.anim .frow:nth-child(3){animation-delay:.06s}
+.tbl-wrap.anim .frow:nth-child(4){animation-delay:.09s}
+.tbl-wrap.anim .frow:nth-child(5){animation-delay:.12s}
+.tbl-wrap.anim .frow:nth-child(6){animation-delay:.15s}
+.tbl-wrap.anim .frow:nth-child(7){animation-delay:.18s}
+.tbl-wrap.anim .frow:nth-child(8){animation-delay:.21s}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════ */
+.site-footer{background:var(--ink);color:var(--ink-4);padding:48px 0 32px}
+.footer-inner{max-width:var(--w);margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px}
+.footer-brand{}
+.footer-wordmark{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:10px}
+.footer-wordmark span{color:var(--red)}
+.footer-tagline{font-size:13px;color:var(--ink-3);line-height:1.65;max-width:240px}
+.footer-col-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:13px;color:var(--ink-4);transition:color var(--t)}
+.footer-links a:hover{color:#fff}
+.footer-bottom{max-width:var(--w);margin:0 auto;padding:24px 32px 0;border-top:1px solid rgba(255,255,255,.08);margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:11.5px;color:var(--ink-3)}
+.footer-copy a{color:var(--gold-2);font-weight:500}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media(max-width:960px){
+  .lead-grid{grid-template-columns:1fr}
+  .news-hero{grid-row:auto}
+  .news-row-grid{grid-template-columns:1fr 1fr}
+  .rk-inner{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .util-bar,.main-nav{display:none}
+}
+@media(max-width:640px){
+  .masthead-inner{padding:0 16px}
+  .lead-inner{padding:0 16px}
+  .news-row-grid{grid-template-columns:1fr}
+  .rk-inner{padding:0 16px}
+  .tbl-head,.frow{grid-template-columns:44px 1fr 88px}
+  .th.hide,.frow .hide{display:none}
+  .footer-inner{grid-template-columns:1fr;padding:0 16px}
+  .footer-bottom{padding:20px 16px 0;flex-direction:column;text-align:center}
+  .m-hero{padding:24px 20px 20px;flex-direction:column}
+  .m-body{padding:20px 20px 28px}
+  .m-statsbar{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ UTILITY BAR ══════════════════════════════════════ -->
+<div class="util-bar">
+  <div class="util-date">
+    <span class="util-date-dot"></span>
+    <span>Viernes, 27 de marzo de 2026</span>
+  </div>
+  <div class="util-links">
+    <a href="https://www.espabox.com" target="_blank">Espabox.com</a>
+    <a href="#">Agenda</a>
+    <a href="#">TV</a>
+    <a href="#">Rankings Mundiales</a>
+  </div>
+</div>
+
+<!-- ═══ MASTHEAD ══════════════════════════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="wordmark" onclick="showView('home')" style="cursor:pointer">
+      <span class="wm-a">A</span><span class="wm-rest">salto</span><span class="wm-period">.</span>
+    </div>
+    <nav class="main-nav">
+      <button class="nav-btn active" id="nav-home" onclick="showView('home')">Portada</button>
+      <button class="nav-btn" id="nav-rankings" onclick="showView('rankings')">Rankings</button>
+      <button class="nav-btn" onclick="window.open('https://www.espabox.com/agenda/','_blank')">Agenda</button>
+      <button class="nav-btn" onclick="window.open('https://www.espabox.com/cuadro-de-campeones/','_blank')">Campeones</button>
+    </nav>
+    <div class="search-form">
+      <svg class="search-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-inp" id="searchInp" type="text" placeholder="Buscar boxeador…" oninput="onSearch(this.value)">
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════
+     HOME VIEW
+═══════════════════════════════════════════════════════ -->
+<div class="view active" id="view-home">
+
+  <!-- LEAD: 5 noticias reales -->
+  <section class="lead-section">
+    <div class="lead-inner">
+      <div class="lead-label">
+        <span class="lead-label-text">Últimas noticias · Boxeo español</span>
+        <span class="lead-label-line"></span>
+        <a href="https://www.espabox.com/category/nac/" target="_blank" style="font-size:11px;font-weight:600;color:var(--red);white-space:nowrap">Ver todas →</a>
+      </div>
+
+      <div class="lead-grid">
+
+        <!-- NOTICIA PRINCIPAL -->
+        <div class="news-hero" onclick="window.open('https://www.espabox.com/jose-luis-navarro-y-aaron-alhambra-disputaran-sus-europeos-en-una-misma-cartelera-el-19-de-junio/','_blank')">
+          <div class="news-hero-img">
+            <div class="news-hero-img-pattern"></div>
+            <div class="news-hero-initials">JLN</div>
+            <div class="news-hero-img-overlay"></div>
+            <span class="news-hero-cat">Nacional</span>
+          </div>
+          <div class="news-hero-body">
+            <div class="news-hero-tag">⭐ Noticia destacada · 27 Mar 2026</div>
+            <h2 class="news-hero-title">Navarro y Alhambra disputarán sus europeos en una misma cartelera el 19 de junio</h2>
+            <p class="news-hero-desc">El cordobés José Luis Navarro y Aarón Alhambra compartirán cartelera en una noche histórica para el boxeo español, con dos títulos europeos en juego el mismo día.</p>
+            <div class="news-hero-meta">
+              <span>Espabox</span>
+              <span class="news-hero-meta-dot"></span>
+              <span>27/03/2026</span>
+              <span class="news-hero-meta-dot"></span>
+              <span>Leer en Espabox →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTICIAS LATERALES -->
+        <div style="display:flex;flex-direction:column">
+
+          <div class="news-card" onclick="window.open('https://www.espabox.com/el-excampeon-de-europa-samuel-molina-vuelve-al-ring/','_blank')">
+            <div class="news-card-thumb">
+              <div class="news-card-thumb-initials">SM</div>
+            </div>
+            <div class="news-card-body">
+              <div class="news-card-tag">Nacional · 25 Mar 2026</div>
+              <div class="news-card-title">El excampeón de Europa Samuel Molina vuelve al ring</div>
+              <div class="news-card-meta">Espabox.com</div>
+            </div>
+          </div>
+
+          <div class="news-card" style="border-top:1px solid var(--line)" onclick="window.open('https://www.espabox.com/alcorac-caballero-y-abel-gimenez-se-esperan-en-las-palmas-de-gran-canaria/','_blank')">
+            <div class="news-card-thumb">
+              <div class="news-card-thumb-initials">AC</div>
+            </div>
+            <div class="news-card-body">
+              <div class="news-card-tag">Nacional · 23 Mar 2026</div>
+              <div class="news-card-title">Alcorac Caballero y Abel Giménez se esperan en Las Palmas de Gran Canaria</div>
+              <div class="news-card-meta">Espabox.com</div>
+            </div>
+          </div>
+
+          <div class="news-card" style="border-top:1px solid var(--line)" onclick="window.open('https://www.espabox.com/pablo-valverde-gano-la-eliminatoria-del-peso-ligero-con-decision-polemica-ante-chimo-eddine/','_blank')">
+            <div class="news-card-thumb">
+              <div class="news-card-thumb-initials">PV</div>
+            </div>
+            <div class="news-card-body">
+              <div class="news-card-tag">Nacional · 22 Mar 2026</div>
+              <div class="news-card-title">Pablo Valverde gana la eliminatoria del peso ligero con decisión polémica ante Chimo Eddine</div>
+              <div class="news-card-meta">Espabox.com</div>
+            </div>
+          </div>
+
+          <div class="news-card" style="border-top:1px solid var(--line)" onclick="window.open('https://www.espabox.com/lester-martinez-campeon-interino-supermedio-wbc-sin-apuros/','_blank')">
+            <div class="news-card-thumb">
+              <div class="news-card-thumb-initials">LM</div>
+            </div>
+            <div class="news-card-body">
+              <div class="news-card-tag">Internacional · 22 Mar 2026</div>
+              <div class="news-card-title">Lester Martínez, campeón interino supermedio WBC sin apuros</div>
+              <div class="news-card-meta">Espabox.com</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECONDARY NEWS ROW -->
+  <section class="news-row-section">
+    <div class="news-row-inner">
+      <div class="sec-divider" style="padding:0;margin-bottom:20px">
+        <span class="sec-divider-title">Más noticias</span>
+        <span class="sec-divider-line"></span>
+        <a href="https://www.espabox.com/category/nac/" target="_blank" class="sec-divider-link">Ver todas →</a>
+      </div>
+      <div class="news-row-grid">
+
+        <div class="news-mini" onclick="window.open('https://www.espabox.com/sufian-rodriguez-me-considero-fuerte-y-pegador/','_blank')">
+          <div class="news-mini-thumb">
+            <div class="news-mini-thumb-initials">SR</div>
+          </div>
+          <div class="news-mini-body">
+            <div class="news-mini-tag">Entrevista · 26 Mar 2026</div>
+            <div class="news-mini-title">Sufian Rodríguez: «Me considero fuerte y pegador»</div>
+            <div class="news-mini-meta">Espabox.com</div>
+          </div>
+        </div>
+
+        <div class="news-mini" onclick="window.open('https://www.espabox.com/talento-sacrificio-y-una-generacion-que-mira-al-mundo-en-el-boxeo-espanol/','_blank')">
+          <div class="news-mini-thumb">
+            <div class="news-mini-thumb-initials">BOX</div>
+          </div>
+          <div class="news-mini-body">
+            <div class="news-mini-tag">Análisis · 23 Mar 2026</div>
+            <div class="news-mini-title">Talento, sacrificio y una generación que mira al mundo en el boxeo español</div>
+            <div class="news-mini-meta">Espabox.com</div>
+          </div>
+        </div>
+
+        <div class="news-mini" onclick="window.open('https://www.espabox.com/todo-preparado-para-que-santander-vibre-el-11-de-abril-con-la-segunda-disputa-continental-de-mariluz-peral/','_blank')">
+          <div class="news-mini-thumb">
+            <div class="news-mini-thumb-initials">MP</div>
+          </div>
+          <div class="news-mini-body">
+            <div class="news-mini-tag">Velada · 26 Mar 2026</div>
+            <div class="news-mini-title">Santander vibrará el 11 de abril con la disputa continental de Mariluz Peral</div>
+            <div class="news-mini-meta">Espabox.com</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RANKINGS TEASER -->
+  <section style="background:var(--white);padding:52px 0">
+    <div style="max-width:var(--w);margin:0 auto;padding:0 32px">
+      <div class="sec-divider" style="padding:0;margin-bottom:28px">
+        <span class="sec-divider-title">Rankings Nacionales</span>
+        <span class="sec-divider-line"></span>
+        <button onclick="showView('rankings')" class="sec-divider-link" style="border:none;background:none;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--gold)">Ver todos los rankings →</button>
+      </div>
+
+      <!-- Mini ranking teaser -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+        <div style="background:var(--bg);border-radius:8px;padding:20px;cursor:pointer;transition:box-shadow var(--t)" onmouseenter="this.style.boxShadow='var(--shadow-sm)'" onmouseleave="this.style.boxShadow='none'" onclick="showView('rankings');switchCat(document.querySelector('.cpill[data-cat=superwelter]'))">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Superwélter · 69.8 kg</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);width:28px">1</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--gold-bg);border:1.5px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--gold)">SG</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Sergio García</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇪🇸 Santander · 35-3</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink-3);width:28px">2</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-3)">OD</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Óscar Díaz</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇪🇸 Sevilla · 16-0</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink-3);width:28px">3</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-3)">JF</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Jorge Fortea</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇪🇸 Valencia · 25-4-1</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg);border-radius:8px;padding:20px;cursor:pointer;transition:box-shadow var(--t)" onmouseenter="this.style.boxShadow='var(--shadow-sm)'" onmouseleave="this.style.boxShadow='none'" onclick="showView('rankings');switchCat(document.querySelector('.cpill[data-cat=medio]'))">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Peso Medio · 72.6 kg</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);width:28px">1</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--gold-bg);border:1.5px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--gold)">EG</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Ezequiel Gurría</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇪🇸 Zaragoza · 21-4</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink-3);width:28px">2</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-3)">JO</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Jhon Jader Obregón</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇨🇴 Colombia · 11-1-2</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink-3);width:28px">3</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-3)">FJ</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Fernando Jaquero</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇪🇸 Alicante · 9-2-1</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg);border-radius:8px;padding:20px;cursor:pointer;transition:box-shadow var(--t)" onmouseenter="this.style.boxShadow='var(--shadow-sm)'" onmouseleave="this.style.boxShadow='none'" onclick="showView('rankings');switchCat(document.querySelector('.cpill[data-cat=crucero]'))">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Crucero · 90.7 kg</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);width:28px">1</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--gold-bg);border:1.5px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--gold)">ER</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Enmanuel Reyes Pla</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇨🇺 Cuba · 2-0 · 🥉 Olímpico</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink-3);width:28px">2</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-3)">BN</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Bocas Njike Kwitchi</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇨🇲 Camerún · 1-0</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink-3);width:28px">3</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-3)">AL</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:600">Alex Leautaud</div>
+              <div style="font-size:11px;color:var(--ink-3)">🇨🇱 Chile · 4-3-1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /view-home -->
+
+<!-- ═══════════════════════════════════════════════════════
+     RANKINGS VIEW
+═══════════════════════════════════════════════════════ -->
+<div class="view" id="view-rankings">
+  <div class="rankings-view">
+    <div class="rk-inner">
+      <div>
+        <div class="rk-header">
+          <div class="rk-eyebrow">Boxeo Profesional Español · 2026</div>
+          <h1 class="rk-title">Rankings Nacionales</h1>
+          <div class="rk-sub">Datos oficiales de <a href="https://www.espabox.com" target="_blank" style="color:var(--gold);font-weight:600">Espabox.com</a> · Actualizado marzo 2026</div>
+        </div>
+
+        <div class="cat-pills" id="catPills">
+          <button class="cpill on" data-cat="superwelter" onclick="switchCat(this)">Superwélter <span class="cpill-kg">69.8 kg</span></button>
+          <button class="cpill" data-cat="medio" onclick="switchCat(this)">Medio <span class="cpill-kg">72.6 kg</span></button>
+          <button class="cpill" data-cat="supermedio" onclick="switchCat(this)">Supermedio <span class="cpill-kg">76.2 kg</span></button>
+          <button class="cpill" data-cat="semipesado" onclick="switchCat(this)">Semipesado <span class="cpill-kg">79.4 kg</span></button>
+          <button class="cpill" data-cat="crucero" onclick="switchCat(this)">Crucero <span class="cpill-kg">90.7 kg</span></button>
+          <button class="cpill" data-cat="pesado" onclick="switchCat(this)">Pesado <span class="cpill-kg">+90 kg</span></button>
+        </div>
+
+        <div class="sort-bar">
+          <div class="sort-left">
+            <span class="sort-lbl">Ordenar</span>
+            <button class="sbtn on" onclick="setSort('rank',this)">Ranking</button>
+            <button class="sbtn" onclick="setSort('ko',this)">KO%</button>
+            <button class="sbtn" onclick="setSort('wins',this)">Victorias</button>
+          </div>
+          <div class="rk-count" id="countLbl"></div>
+        </div>
+
+        <div class="tbl-wrap" id="tableWrap">
+          <div class="tbl-head">
+            <span class="th" style="text-align:center">#</span>
+            <span class="th">Púgil</span>
+            <span class="th r">Récord</span>
+            <span class="th r hide">KOs</span>
+            <span class="th r hide">Títulos</span>
+            <span class="th r hide">Últ. 5</span>
+          </div>
+          <div id="fighterRows"></div>
+          <div class="no-res" id="noRes" style="display:none">Sin resultados.</div>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="sc">
+          <div class="sc-head">🏆 Campeones España</div>
+          <div id="champItems"></div>
+        </div>
+        <div class="sc">
+          <div class="sc-head">⭐ Destacado</div>
+          <div class="feat-card">
+            <div class="feat-av">ER</div>
+            <div class="feat-name">Enmanuel Reyes Pla</div>
+            <div class="feat-tag">🥉 Bronce Olímpico 2024</div>
+            <div class="feat-bio">«El Profeta» debuta en el profesionalismo con 2-0. El boxeador español más mediático del momento tras París 2024.</div>
+            <div class="feat-stats">
+              <div><div class="fs-n">2</div><div class="fs-l">Combates</div></div>
+              <div><div class="fs-n">2</div><div class="fs-l">Victorias</div></div>
+              <div><div class="fs-n">2</div><div class="fs-l">KOs</div></div>
+            </div>
+          </div>
+        </div>
+        <a href="https://www.espabox.com/ranking-espabox/" target="_blank" class="espa-link">
+          <div><div class="espa-lbl">Fuente oficial</div><div class="espa-name">Espabox.com</div></div>
+          <span class="espa-arr">→</span>
+        </a>
+      </aside>
+    </div>
+  </div>
+</div><!-- /view-rankings -->
+
+<!-- ═══ MODAL ══════════════════════════════════════════════ -->
+<div class="overlay" id="overlay" onclick="closeOverlay(event)">
+  <div class="modal" id="modal">
+    <button class="m-close" onclick="closeModal()">✕</button>
+    <div id="modalInner"></div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-wordmark"><span>A</span>salto.</div>
+      <p class="footer-tagline">La referencia del boxeo profesional español. Rankings, noticias y análisis del pugilismo nacional.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Secciones</div>
+      <div class="footer-links">
+        <a onclick="showView('home')" style="cursor:pointer">Portada</a>
+        <a onclick="showView('rankings')" style="cursor:pointer">Rankings Nacionales</a>
+        <a href="https://www.espabox.com/cuadro-de-campeones/" target="_blank">Campeones</a>
+        <a href="https://www.espabox.com/agenda/" target="_blank">Agenda de veladas</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Datos y fuentes</div>
+      <div class="footer-links">
+        <a href="https://www.espabox.com" target="_blank">Espabox.com</a>
+        <a href="https://boxrec.com" target="_blank">BoxRec</a>
+        <a href="https://www.ringmagazine.com" target="_blank">The Ring Magazine</a>
+        <a href="https://www.febox.es" target="_blank">FEBOX</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 <strong style="color:#fff">Asalto.</strong> — Visualización independiente basada en datos de <a href="https://www.espabox.com" target="_blank">Espabox.com</a></div>
+    <div class="footer-copy">Hecho con ♥ para el boxeo español</div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   VIEW ROUTER
+═══════════════════════════════════════════════════════ */
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const nb=document.getElementById('nav-'+id);
+  if(nb)nb.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════ */
+const DB={
+  superwelter:{label:'Superwélter',kg:'69.853 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-superwelter/',fighters:[
+    {rank:1,name:'Sergio García Gómez',nick:'"El Niño"',flag:'🇪🇸',country:'España',city:'Santander, Cantabria',born:'1992',height:'1.80m',reach:'180cm',stance:'Orthodox',record:{w:35,l:3,d:0},kos:15,titles:['C.España','C.Europa ×4'],isChamp:true,fights:['W','W','L','W','W'],bio:'Cuatro veces Campeón de Europa. El boxeador español activo más laureado del momento.'},
+    {rank:2,name:'Óscar Díaz Muñoz',nick:'"El Toro"',flag:'🇪🇸',country:'España',city:'Alcalá de Guadaíra, Sevilla',born:'2001',height:'1.77m',reach:'177cm',stance:'Orthodox',record:{w:16,l:0,d:0},kos:6,titles:['Excampeón'],isChamp:false,fights:['W','W','W','W','W'],bio:'Joven invicto sevillano. El futuro del boxeo andaluz.'},
+    {rank:3,name:'Jorge Fortea Sales',nick:'',flag:'🇪🇸',country:'España',city:'Sueca, Valencia',born:'1990',height:'1.78m',reach:'178cm',stance:'Orthodox',record:{w:25,l:4,d:1},kos:10,titles:['Excampeón'],isChamp:false,fights:['W','L','W','W','D'],bio:'Excampeón de España. Veterano con amplia experiencia.'},
+    {rank:4,name:'Ismael S. Flores',nick:'',flag:'🇦🇷',country:'Argentina',city:'Campo Grande, Argentina',born:'1999',height:'1.69m',reach:'169cm',stance:'Orthodox',record:{w:17,l:1,d:1},kos:12,titles:[],isChamp:false,fights:['W','W','W','D','W'],bio:'Gran porcentaje de KOs. Pegador de Campo Grande.'},
+    {rank:5,name:'Elías S. Pinoargote',nick:'',flag:'🇪🇨',country:'Ecuador',city:'Portoviejo, Ecuador',born:'1999',height:'1.80m',reach:'180cm',stance:'Southpaw',record:{w:8,l:1,d:0},kos:4,titles:['C.España'],isChamp:true,fights:['W','W','W','L','W'],bio:'Actual Campeón de España. Zurdo técnico originario de Ecuador.'},
+    {rank:6,name:'Ali Modian Bouhechlaf',nick:'"El Príncipe"',flag:'🇲🇦',country:'Marruecos',city:'Sidi Bu Zineb, Marruecos',born:'1993',height:'1.87m',reach:'187cm',stance:'Orthodox',record:{w:15,l:1,d:0},kos:6,titles:[],isChamp:false,fights:['W','W','L','W','W'],bio:'Boxeador técnico apodado "El Príncipe".'},
+    {rank:7,name:'Leonardo Di Stefano',nick:'',flag:'🇩🇪',country:'Alemania',city:'Luisburgo, Alemania',born:'1995',height:'1.75m',reach:'175cm',stance:'Orthodox',record:{w:17,l:7,d:0},kos:14,titles:[],isChamp:false,fights:['W','L','W','W','W'],bio:'14 victorias por KO. Nacido en Luisburgo.'},
+    {rank:13,name:'Andreu Caballero Gassull',nick:'',flag:'🇪🇸',country:'España',city:'Barcelona',born:'2000',height:'1.77m',reach:'177cm',stance:'Orthodox',record:{w:7,l:0,d:0},kos:1,titles:[],isChamp:false,fights:['W','W','W','W','W'],bio:'Joven talento barcelonés invicto.'},
+  ]},
+  medio:{label:'Peso Medio',kg:'72.575 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-medio/',fighters:[
+    {rank:1,name:'Ezequiel Gurría Ortigas',nick:'',flag:'🇪🇸',country:'España',city:'Zaragoza',born:'1993',height:'1.81m',reach:'181cm',stance:'Orthodox',record:{w:21,l:4,d:0},kos:5,titles:['C.España'],isChamp:true,fights:['W','W','L','W','W'],bio:'Actual Campeón de España. Doble titular nacional.'},
+    {rank:2,name:'Jhon Jader Obregón',nick:'',flag:'🇨🇴',country:'Colombia',city:'Palmira, Colombia',born:'1998',height:'1.81m',reach:'181cm',stance:'Orthodox',record:{w:11,l:1,d:2},kos:5,titles:['Excampeón'],isChamp:false,fights:['W','D','W','W','L'],bio:'Excampeón de España. Técnico y completo.'},
+    {rank:3,name:'Fernando Sánchez Jaquero',nick:'"Fernando Jaquero"',flag:'🇪🇸',country:'España',city:'Alicante',born:'1993',height:'1.85m',reach:'185cm',stance:'Orthodox',record:{w:9,l:2,d:1},kos:4,titles:[],isChamp:false,fights:['W','W','D','W','L'],bio:'Boxeador alicantino. Conocido como "Fernando Jaquero".'},
+    {rank:4,name:'Álvaro Godoy Alarcón',nick:'',flag:'🇪🇸',country:'España',city:'El Ejido, Almería',born:'2001',height:'1.78m',reach:'178cm',stance:'Orthodox',record:{w:7,l:3,d:1},kos:2,titles:[],isChamp:false,fights:['W','L','W','D','W'],bio:'Joven boxeador almeriense en progresión.'},
+    {rank:5,name:'Ioan Alexandru Lutic',nick:'',flag:'🇷🇴',country:'Rumanía',city:'Botosani, Rumanía',born:'1996',height:'1.74m',reach:'174cm',stance:'Orthodox',record:{w:5,l:9,d:0},kos:4,titles:[],isChamp:false,fights:['L','W','L','W','W'],bio:'Originario de Rumanía. Luchador incansable.'},
+    {rank:6,name:'Alcorac Caballero Torres',nick:'',flag:'🇪🇸',country:'España',city:'Arucas, Las Palmas',born:'1990',height:'1.78m',reach:'178cm',stance:'Orthodox',record:{w:8,l:2,d:0},kos:2,titles:[],isChamp:false,fights:['W','W','W','L','W'],bio:'Boxeador canario de Arucas.'},
+    {rank:7,name:'Sergio Fernández Lorenzo',nick:'"El Kaiser"',flag:'🇪🇸',country:'España',city:'Gijón, Asturias',born:'1992',height:'1.80m',reach:'180cm',stance:'Orthodox',record:{w:16,l:3,d:1},kos:5,titles:['Excampeón ×2'],isChamp:false,fights:['W','W','D','W','L'],bio:'Doble excampeón. "El Kaiser" de Gijón.'},
+    {rank:10,name:'Alberto Villa Beltrán',nick:'"Albert Villa"',flag:'🇪🇸',country:'España',city:'Barcelona',born:'2001',height:'1.77m',reach:'177cm',stance:'Orthodox',record:{w:6,l:0,d:1},kos:3,titles:[],isChamp:false,fights:['W','W','D','W','W'],bio:'Joven barcelonés invicto. Gran proyección.'},
+  ]},
+  supermedio:{label:'Supermedio',kg:'76.203 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-supermedio/',fighters:[
+    {rank:1,name:'José Luis Navarro Gómez',nick:'',flag:'🇪🇸',country:'España',city:'Córdoba',born:'2000',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:17,l:2,d:0},kos:12,titles:['Excampeón'],isChamp:false,fights:['W','W','W','L','W'],bio:'12 KOs en 19 combates. Joven promesa cordobesa.'},
+    {rank:2,name:'Carlos Mena Mijares',nick:'',flag:'🇨🇺',country:'Cuba',city:'Ciego de Ávila, Cuba',born:'1989',height:'1.80m',reach:'180cm',stance:'Orthodox',record:{w:10,l:8,d:1},kos:3,titles:['C.España'],isChamp:true,fights:['W','W','L','W','D'],bio:'Actual Campeón de España. Nacido en Cuba.'},
+    {rank:3,name:'Damián Biacho Bolequia',nick:'"Guinea"',flag:'🇪🇸',country:'España',city:'Puerto del Rosario, Fuerteventura',born:'1991',height:'1.81m',reach:'181cm',stance:'Orthodox',record:{w:21,l:1,d:0},kos:7,titles:['Excampeón ×2'],isChamp:false,fights:['W','W','W','W','L'],bio:'"Guinea". Dos veces excampeón. 21-1 brillante.'},
+    {rank:4,name:'Ronny A. Landaeta Utrera',nick:'"El Llanero"',flag:'🇻🇪',country:'Venezuela',city:'Estado Guarico, Venezuela',born:'1983',height:'1.78m',reach:'178cm',stance:'Orthodox',record:{w:22,l:8,d:0},kos:12,titles:['Excampeón ×4'],isChamp:false,fights:['W','L','W','W','W'],bio:'Cuatro veces excampeón. "El Llanero" venezolano.'},
+    {rank:5,name:'Roberto Casado Olmedo',nick:'',flag:'🇪🇸',country:'España',city:'Madrid',born:'1985',height:'1.82m',reach:'182cm',stance:'Southpaw',record:{w:4,l:6,d:1},kos:0,titles:[],isChamp:false,fights:['L','W','L','D','W'],bio:'Zurdo madrileño.'},
+    {rank:7,name:'Jaime Fuentes-Pila Sañudo',nick:'',flag:'🇪🇸',country:'España',city:'Cantabria',born:'2002',height:'1.84m',reach:'184cm',stance:'Southpaw',record:{w:2,l:0,d:0},kos:2,titles:[],isChamp:false,fights:['W','W'],bio:'Joven zurdo cántabro. 2 KOs en 2 combates.'},
+  ]},
+  semipesado:{label:'Semipesado',kg:'79.378 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-semipesado/',fighters:[
+    {rank:1,name:'Gazi Jalidov Gafurova',nick:'"Gazi Jalidov"',flag:'🇷🇺',country:'Rusia',city:'Khasavyurt, Rusia',born:'1995',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:4,l:0,d:0},kos:2,titles:['C.España'],isChamp:true,fights:['W','W','W','W'],bio:'Actual Campeón de España. 4-0 invicto.'},
+    {rank:2,name:'Carlos A. Lamela Vázquez',nick:'',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'1992',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:9,l:7,d:0},kos:5,titles:['Excampeón'],isChamp:false,fights:['L','W','L','W','W'],bio:'Excampeón de España. Habanero con experiencia.'},
+    {rank:3,name:'Javier A. Santana Alonso',nick:'',flag:'🇪🇸',country:'España',city:'Las Palmas de G.C.',born:'2003',height:'1.84m',reach:'184cm',stance:'Orthodox',record:{w:4,l:3,d:2},kos:1,titles:[],isChamp:false,fights:['W','D','L','W','D'],bio:'Joven canario. C.España amateur joven 2021.'},
+    {rank:4,name:'José Antonio Traicovich',nick:'',flag:'🇪🇸',country:'España',city:'Albacete',born:'1999',height:'1.80m',reach:'180cm',stance:'Orthodox',record:{w:9,l:0,d:0},kos:4,titles:[],isChamp:false,fights:['W','W','W','W','W'],bio:'Invicto en 9. Boxeador de Albacete.'},
+    {rank:5,name:'Eduard Ionut Curmei',nick:'',flag:'🇷🇴',country:'Rumanía',city:'Piatra Neamt, Rumanía',born:'2005',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:8,l:1,d:0},kos:6,titles:[],isChamp:false,fights:['W','W','W','L','W'],bio:'6 KOs en 9 combates. Joven prodigio rumano.'},
+    {rank:6,name:'Adam Trenado Makhdouj',nick:'"El Tornado"',flag:'🇪🇸',country:'España',city:'Talavera de la Reina, Toledo',born:'1997',height:'1.85m',reach:'185cm',stance:'Orthodox',record:{w:11,l:6,d:1},kos:2,titles:[],isChamp:false,fights:['W','D','L','W','W'],bio:'"El Tornado" de Talavera.'},
+    {rank:8,name:'Fernando Heredia Gallardo',nick:'"La Roca"',flag:'🇪🇸',country:'España',city:'Palma de Mallorca',born:'1982',height:'1.79m',reach:'179cm',stance:'Orthodox',record:{w:8,l:15,d:1},kos:3,titles:[],isChamp:false,fights:['L','W','L','W','L'],bio:'"La Roca" palmesano. Veterano.'},
+  ]},
+  crucero:{label:'Crucero',kg:'90.718 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-crucero/',fighters:[
+    {rank:1,name:'Enmanuel Reyes Pla',nick:'"El Profeta"',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'1992',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:2,l:0,d:0},kos:2,titles:['🥉 Bronce OL. 2024'],isChamp:false,fights:['W','W'],bio:'Bronce Olímpico París 2024. El boxeador español más mediático.'},
+    {rank:2,name:'Bocas Junior Njike Kwitchi',nick:'',flag:'🇨🇲',country:'Camerún',city:'Yaoundé, Camerún',born:'1999',height:'1.84m',reach:'184cm',stance:'Orthodox',record:{w:1,l:0,d:0},kos:1,titles:[],isChamp:false,fights:['W'],bio:'Debut victorioso por KO. Nacido en Yaoundé.'},
+    {rank:3,name:'Alex Ray Leautaud Quiroga',nick:'',flag:'🇨🇱',country:'Chile',city:'Santiago, Chile',born:'1998',height:'1.89m',reach:'189cm',stance:'Orthodox',record:{w:4,l:3,d:1},kos:3,titles:[],isChamp:false,fights:['W','L','D','W','W'],bio:'Nacido en Santiago (Chile). Experiencia contrastada.'},
+    {rank:4,name:'Adrián Fresneda Ricardo',nick:'',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'2004',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:2,l:0,d:0},kos:0,titles:['C.Mundo Joven 2022'],isChamp:false,fights:['W','W'],bio:'Campeón del Mundo Joven 2022. Debut perfecto.'},
+    {rank:5,name:'Diego Torrente Ibáñez',nick:'',flag:'🇪🇸',country:'España',city:'Barcelona',born:'1982',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:8,l:6,d:0},kos:4,titles:[],isChamp:false,fights:['W','L','W','L','W'],bio:'Veterano barcelonés con larga trayectoria.'},
+    {rank:6,name:'Makhtar Ndiaga Diop Niang',nick:'"Yagui"',flag:'🇸🇳',country:'Senegal',city:'Dakar, Senegal',born:'1998',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:1,l:0,d:0},kos:1,titles:['Excampeón Am.'],isChamp:false,fights:['W'],bio:'"Yagui" de Dakar. Doble C.España amateur.'},
+  ]},
+  pesado:{label:'Pesado',kg:'+90.718 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-pesado/',fighters:[
+    {rank:1,name:'David A. Romero Bernardo',nick:'"Daan Romero"',flag:'🇪🇸',country:'España',city:'Valencia',born:'1995',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:6,l:0,d:0},kos:3,titles:['C.España Am.'],isChamp:false,fights:['W','W','W','W','W'],bio:'Invicto en 6. La mayor promesa del pesado español.'},
+    {rank:2,name:'Álvaro Terrero Marín',nick:'',flag:'🇪🇸',country:'España',city:'Chiclana de la Frontera, Cádiz',born:'1987',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:5,l:22,d:2},kos:3,titles:[],isChamp:false,fights:['L','L','W','L','W'],bio:'Veterano gaditano. El más experimentado del pesado.'},
+    {rank:3,name:'Miguel Galván Cabrera',nick:'',flag:'🇪🇸',country:'España',city:'Santa Cruz de Tenerife',born:'1980',height:'1.76m',reach:'176cm',stance:'Orthodox',record:{w:5,l:2,d:0},kos:4,titles:[],isChamp:false,fights:['W','W','L','W','W'],bio:'Pegador canario con buen KO%.'},
+    {rank:4,name:'David V. Trallero Oliver',nick:'',flag:'🇪🇸',country:'España',city:'Denia, Alicante',born:'1984',height:'1.81m',reach:'181cm',stance:'Orthodox',record:{w:4,l:0,d:1},kos:2,titles:[],isChamp:false,fights:['W','D','W','W','W'],bio:'Sólido boxeador de Denia. Sin derrotas.'},
+    {rank:5,name:'Mohamed Abouhamda',nick:'',flag:'🇲🇦',country:'Marruecos',city:'Nador, Marruecos',born:'2002',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:2,l:0,d:0},kos:2,titles:[],isChamp:false,fights:['W','W'],bio:'Joven de Nador. 2 KOs en 2 debut.'},
+    {rank:6,name:'Álvaro Rodríguez Ortiz',nick:'"Grizzly"',flag:'🇪🇸',country:'España',city:'Algeciras, Cádiz',born:'1989',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:1,l:0,d:0},kos:1,titles:[],isChamp:false,fights:['W'],bio:'"Grizzly" de Algeciras. Debut KO.'},
+  ]}
+};
+
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+let cat='superwelter',sortMode='rank',query='';
+
+/* ═══════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════ */
+function ini(n){const p=n.replace(/["""«»]/g,'').trim().split(' ');return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():n.slice(0,2).toUpperCase()}
+function koPct(f){const t=f.record.w+f.record.l+f.record.d;return t?Math.round(f.kos/t*100):0}
+function rec(f){return`${f.record.w}-${f.record.l}${f.record.d>0?'-'+f.record.d:''}`}
+function dots(fights){return fights.slice(0,5).map(r=>`<span class="dot ${r==='W'?'dw':r==='L'?'dl':'dd'}">${r}</span>`).join('')}
+function badges(titles){return titles.map(t=>{let c=t.startsWith('C.España')?'tb-es':t.includes('Europa')?'tb-eu':(t.includes('OL')||t.includes('Mundo'))?'tb-ol':'tb-ex';return`<span class="tbadge ${c}">${t}</span>`}).join(' ')}
+function age(b){return new Date().getFullYear()-parseInt(b)}
+function isChamp(f){return f.isChamp||f.titles.some(t=>t==='C.España')}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER TABLE
+═══════════════════════════════════════════════════════ */
+function renderTable(){
+  const d=DB[cat];
+  let list=[...d.fighters];
+  if(query){const q=query.toLowerCase();list=list.filter(f=>f.name.toLowerCase().includes(q)||f.nick.toLowerCase().includes(q)||f.country.toLowerCase().includes(q)||f.city.toLowerCase().includes(q))}
+  if(sortMode==='ko')list.sort((a,b)=>koPct(b)-koPct(a));
+  else if(sortMode==='wins')list.sort((a,b)=>b.record.w-a.record.w);
+  else list.sort((a,b)=>a.rank-b.rank);
+
+  const tw=document.getElementById('tableWrap');
+  tw.classList.remove('anim');void tw.offsetWidth;tw.classList.add('anim');
+  setTimeout(()=>tw.classList.remove('anim'),600);
+
+  document.getElementById('countLbl').textContent=`${list.length} boxeador${list.length!==1?'es':''}`;
+  const noRes=document.getElementById('noRes');
+  const rows=document.getElementById('fighterRows');
+  if(!list.length){rows.innerHTML='';noRes.style.display='block';return}
+  noRes.style.display='none';
+
+  rows.innerHTML=list.map(f=>`
+    <div class="frow ${isChamp(f)?'champ':''}" onclick="openModal('${cat}',${f.rank})">
+      <div class="rc"><div class="rc-n">${f.rank}</div>${isChamp(f)?'<div class="rc-c">CAMP.</div>':''}</div>
+      <div class="fi">
+        <div class="av">${ini(f.name)}</div>
+        <div class="fi-t">
+          <div class="fi-name">${f.name}</div>
+          <div class="fi-sub">${f.nick?`<span class="fi-nick">${f.nick}</span><span class="fi-sep">·</span>`:''}<span class="fi-flag">${f.flag}</span><span class="fi-country">${f.country}</span></div>
+        </div>
+      </div>
+      <div class="rec-cell"><div class="rec-main">${rec(f)}</div><div class="rec-sub">${f.record.w+f.record.l+f.record.d} combates</div></div>
+      <div class="ko-cell hide">${f.kos}<br><span class="ko-pct">${koPct(f)}%</span></div>
+      <div class="title-cell hide">${badges(f.titles)}</div>
+      <div class="lf hide">${dots(f.fights)}</div>
+    </div>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER CHAMPS
+═══════════════════════════════════════════════════════ */
+function renderChamps(){
+  const items=[];
+  for(const[k,d]of Object.entries(DB)){const c=d.fighters.find(f=>isChamp(f));if(c)items.push({...c,catLabel:d.label,catKey:k})}
+  document.getElementById('champItems').innerHTML=items.map(c=>`
+    <div class="ci" onclick="switchCatKey('${c.catKey}');setTimeout(()=>openModal('${c.catKey}',${c.rank}),250)">
+      <div class="ci-av">${ini(c.name)}</div>
+      <div class="ci-info"><div class="ci-name">${c.name.split(' ').slice(0,2).join(' ')}</div><div class="ci-cat">${c.catLabel} · ${c.flag} ${c.country}</div></div>
+      <span class="tbadge tb-es">C.ESP</span>
+    </div>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════════ */
+function openModal(catKey,rank){
+  const f=DB[catKey].fighters.find(x=>x.rank===rank);if(!f)return;
+  const d=DB[catKey];const c=isChamp(f);
+  const total=f.record.w+f.record.l+f.record.d;
+  const fl={W:'Victoria',L:'Derrota',D:'Empate'};
+  document.getElementById('modalInner').innerHTML=`
+    <div class="m-hero">
+      <div class="m-av ${c?'gold':''}">${ini(f.name)}</div>
+      <div>
+        <div class="m-pretitle">Ranking #${f.rank} · ${d.label}</div>
+        <div class="m-name">${f.name}</div>
+        ${f.nick?`<div class="m-nick">${f.nick}</div>`:''}
+        <div class="m-badges">${badges(f.titles)}</div>
+      </div>
+    </div>
+    <div class="m-statsbar">
+      <div class="m-stat"><div class="m-stat-n">${f.record.w}</div><div class="m-stat-l">Victorias</div></div>
+      <div class="m-stat"><div class="m-stat-n">${f.record.l}</div><div class="m-stat-l">Derrotas</div></div>
+      <div class="m-stat"><div class="m-stat-n">${f.record.d}</div><div class="m-stat-l">Empates</div></div>
+      <div class="m-stat"><div class="m-stat-n">${f.kos}</div><div class="m-stat-l">KOs</div></div>
+    </div>
+    <div class="m-body">
+      <div class="m-sec">
+        <div class="m-sec-title">Ficha del Púgil</div>
+        <div class="m-grid">
+          <div class="m-detail"><div class="m-dlabel">País</div><div class="m-dvalue">${f.flag} ${f.country}</div></div>
+          <div class="m-detail"><div class="m-dlabel">Ciudad</div><div class="m-dvalue">${f.city}</div></div>
+          <div class="m-detail"><div class="m-dlabel">Edad</div><div class="m-dvalue">${age(f.born)} años (n. ${f.born})</div></div>
+          <div class="m-detail"><div class="m-dlabel">Altura</div><div class="m-dvalue">${f.height}</div></div>
+          <div class="m-detail"><div class="m-dlabel">Alcance</div><div class="m-dvalue">${f.reach}</div></div>
+          <div class="m-detail"><div class="m-dlabel">Guardia</div><div class="m-dvalue">${f.stance==='Southpaw'?'Zurdo':'Ortodoxa'}</div></div>
+          <div class="m-detail"><div class="m-dlabel">Récord</div><div class="m-dvalue">${rec(f)} (${total} combates)</div></div>
+          <div class="m-detail"><div class="m-dlabel">KO%</div><div class="m-dvalue">${koPct(f)}% — ${f.kos} victorias por KO</div></div>
+        </div>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Trayectoria</div>
+        <p class="m-bio">${f.bio}</p>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Últimos ${f.fights.length} combates</div>
+        <div class="m-fights">${f.fights.map((r,i)=>`<div class="mf-item"><div class="mf-badge dot ${r==='W'?'dw':r==='L'?'dl':'dd'}">${r}</div><div class="mf-info"><div class="mf-name">${fl[r]} — Combate ${f.fights.length-i} de ${total}</div><div class="mf-det">${d.label} · Liga Española Profesional</div></div><div class="mf-date">2025–26</div></div>`).join('')}</div>
+      </div>
+      <div class="m-src"><a href="${d.url}" target="_blank">Ver ficha completa en Espabox.com →</a></div>
+    </div>`;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeOverlay(e){if(e.target===document.getElementById('overlay'))closeModal()}
+function closeModal(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ═══════════════════════════════════════════════════════
+   CONTROLS
+═══════════════════════════════════════════════════════ */
+function switchCat(btn){
+  cat=btn.dataset.cat;
+  document.querySelectorAll('.cpill').forEach(p=>p.classList.toggle('on',p===btn));
+  sortMode='rank';
+  document.querySelectorAll('.sbtn').forEach((b,i)=>b.classList.toggle('on',i===0));
+  renderTable();
+}
+function switchCatKey(key){
+  cat=key;
+  document.querySelectorAll('.cpill').forEach(p=>p.classList.toggle('on',p.dataset.cat===key));
+  renderTable();
+  showView('rankings');
+}
+function setSort(m,btn){
+  sortMode=m;
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');renderTable();
+}
+function onSearch(v){query=v.trim();renderTable()}
+
+/* ═══════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════ */
+renderTable();
+renderChamps();
+</script>
+</body>
+</html>
