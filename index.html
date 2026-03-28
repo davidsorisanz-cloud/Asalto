@@ -274,6 +274,12 @@ img{display:block;max-width:100%}
 /* ═══════════════════════════════════════════════════════
    RANKINGS VIEW
 ═══════════════════════════════════════════════════════ */
+/* Photo avatars */
+.av-photo{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top center;border:1.5px solid var(--line);flex-shrink:0;transition:border-color var(--t)}
+.frow.champ .av-photo{border-color:var(--gold-line)}
+.frow:hover .av-photo{border-color:var(--ink-3)}
+.m-av-photo{width:88px;height:88px;border-radius:50%;object-fit:cover;object-position:top center;border:2px solid var(--line);flex-shrink:0}
+
 .rankings-view{background:var(--bg);min-height:100vh;padding:36px 0 80px}
 .rk-inner{max-width:var(--w);margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 280px;gap:28px;align-items:start}
 
@@ -930,7 +936,7 @@ const DB={
   ]},
   semipesado:{label:'Semipesado',kg:'79.378 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-semipesado/',fighters:[
     {rank:1,name:'Gazi Jalidov Gafurova',nick:'"Gazi Jalidov"',flag:'🇷🇺',country:'Rusia',city:'Khasavyurt, Rusia',born:'1995',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:4,l:0,d:0},kos:2,titles:['C.España'],isChamp:true,fights:['W','W','W','W'],bio:'Actual Campeón de España. 4-0 invicto.'},
-    {rank:2,name:'Carlos A. Lamela Vázquez',nick:'',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'1992',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:9,l:7,d:0},kos:5,titles:['Excampeón'],isChamp:false,fights:['L','W','L','W','W'],bio:'Excampeón de España. Habanero con experiencia.'},
+    {rank:2,name:'Carlos A. Lamela Vázquez',nick:'',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'1992',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:9,l:7,d:0},kos:5,titles:['Excampeón'],isChamp:false,fights:['L','W','L','W','W'],bio:'Excampeón de España. Habanero con experiencia.',photo:'img/Carlos Lamela .jpeg'},
     {rank:3,name:'Javier A. Santana Alonso',nick:'',flag:'🇪🇸',country:'España',city:'Las Palmas de G.C.',born:'2003',height:'1.84m',reach:'184cm',stance:'Orthodox',record:{w:4,l:3,d:2},kos:1,titles:[],isChamp:false,fights:['W','D','L','W','D'],bio:'Joven canario. C.España amateur joven 2021.'},
     {rank:4,name:'José Antonio Traicovich',nick:'',flag:'🇪🇸',country:'España',city:'Albacete',born:'1999',height:'1.80m',reach:'180cm',stance:'Orthodox',record:{w:9,l:0,d:0},kos:4,titles:[],isChamp:false,fights:['W','W','W','W','W'],bio:'Invicto en 9. Boxeador de Albacete.'},
     {rank:5,name:'Eduard Ionut Curmei',nick:'',flag:'🇷🇴',country:'Rumanía',city:'Piatra Neamt, Rumanía',born:'2005',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:8,l:1,d:0},kos:6,titles:[],isChamp:false,fights:['W','W','W','L','W'],bio:'6 KOs en 9 combates. Joven prodigio rumano.'},
@@ -938,7 +944,7 @@ const DB={
     {rank:8,name:'Fernando Heredia Gallardo',nick:'"La Roca"',flag:'🇪🇸',country:'España',city:'Palma de Mallorca',born:'1982',height:'1.79m',reach:'179cm',stance:'Orthodox',record:{w:8,l:15,d:1},kos:3,titles:[],isChamp:false,fights:['L','W','L','W','L'],bio:'"La Roca" palmesano. Veterano.'},
   ]},
   crucero:{label:'Crucero',kg:'90.718 kg',url:'https://www.espabox.com/ranking-profesional-espanol-peso-crucero/',fighters:[
-    {rank:1,name:'Enmanuel Reyes Pla',nick:'"El Profeta"',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'1992',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:2,l:0,d:0},kos:2,titles:['🥉 Bronce OL. 2024'],isChamp:false,fights:['W','W'],bio:'Bronce Olímpico París 2024. El boxeador español más mediático.'},
+    {rank:1,name:'Enmanuel Reyes Pla',nick:'"El Profeta"',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'1992',height:'1.90m',reach:'190cm',stance:'Orthodox',record:{w:2,l:0,d:0},kos:2,titles:['🥉 Bronce OL. 2024'],isChamp:false,fights:['W','W'],bio:'Bronce Olímpico París 2024. El boxeador español más mediático.',photo:'img/Emanuel Reyes.jpeg'},
     {rank:2,name:'Bocas Junior Njike Kwitchi',nick:'',flag:'🇨🇲',country:'Camerún',city:'Yaoundé, Camerún',born:'1999',height:'1.84m',reach:'184cm',stance:'Orthodox',record:{w:1,l:0,d:0},kos:1,titles:[],isChamp:false,fights:['W'],bio:'Debut victorioso por KO. Nacido en Yaoundé.'},
     {rank:3,name:'Alex Ray Leautaud Quiroga',nick:'',flag:'🇨🇱',country:'Chile',city:'Santiago, Chile',born:'1998',height:'1.89m',reach:'189cm',stance:'Orthodox',record:{w:4,l:3,d:1},kos:3,titles:[],isChamp:false,fights:['W','L','D','W','W'],bio:'Nacido en Santiago (Chile). Experiencia contrastada.'},
     {rank:4,name:'Adrián Fresneda Ricardo',nick:'',flag:'🇨🇺',country:'Cuba',city:'La Habana, Cuba',born:'2004',height:'1.86m',reach:'186cm',stance:'Orthodox',record:{w:2,l:0,d:0},kos:0,titles:['C.Mundo Joven 2022'],isChamp:false,fights:['W','W'],bio:'Campeón del Mundo Joven 2022. Debut perfecto.'},
@@ -996,7 +1002,7 @@ function renderTable(){
     <div class="frow ${isChamp(f)?'champ':''}" onclick="openModal('${cat}',${f.rank})">
       <div class="rc"><div class="rc-n">${f.rank}</div>${isChamp(f)?'<div class="rc-c">CAMP.</div>':''}</div>
       <div class="fi">
-        <div class="av">${ini(f.name)}</div>
+        ${f.photo?`<img src="${f.photo}" class="av av-photo" alt="${f.name}" onerror="this.outerHTML='<div class=\\'av\\'>${ini(f.name)}</div>'">`:`<div class="av">${ini(f.name)}</div>`}
         <div class="fi-t">
           <div class="fi-name">${f.name}</div>
           <div class="fi-sub">${f.nick?`<span class="fi-nick">${f.nick}</span><span class="fi-sep">·</span>`:''}<span class="fi-flag">${f.flag}</span><span class="fi-country">${f.country}</span></div>
@@ -1033,7 +1039,7 @@ function openModal(catKey,rank){
   const fl={W:'Victoria',L:'Derrota',D:'Empate'};
   document.getElementById('modalInner').innerHTML=`
     <div class="m-hero">
-      <div class="m-av ${c?'gold':''}">${ini(f.name)}</div>
+      ${f.photo?`<img src="${f.photo}" class="m-av m-av-photo" alt="${f.name}" onerror="this.outerHTML='<div class=\\'m-av ${c?'gold':''}\\'>${ini(f.name)}</div>'">`:`<div class="m-av ${c?'gold':''}">${ini(f.name)}</div>`}
       <div>
         <div class="m-pretitle">Ranking #${f.rank} · ${d.label}</div>
         <div class="m-name">${f.name}</div>
